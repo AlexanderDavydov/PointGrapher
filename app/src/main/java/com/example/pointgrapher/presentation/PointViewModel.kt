@@ -1,5 +1,6 @@
 package com.example.pointgrapher.presentation
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pointgrapher.domain.exeption.NerworkError
@@ -33,13 +34,11 @@ class PointViewModel @Inject constructor(
                     )
                 }
             } catch (e: Exception) {
-                val errorTypeViewData = when (e) {
-                    is NerworkError -> PointScreenState.ErrorTypeViewData.RequstError
-                    is NumberFormatException -> PointScreenState.ErrorTypeViewData.EmptyNumber
-                    is IllegalArgumentException -> PointScreenState.ErrorTypeViewData.NegativeNumber
-                    else -> PointScreenState.ErrorTypeViewData.Uncpecified
-                }
+                val errorTypeViewData = extractErrorTypeViewdata(e)
                 _state.update { it.copy(errorTypeViewData = errorTypeViewData, isLoading = false) }
+
+                val logMessage = "Error while requesting ${state.value.requeredPointNumber} points"
+                Log.e(PointViewModel::class.java.name, logMessage, e)
             }
         }
     }
@@ -49,6 +48,23 @@ class PointViewModel @Inject constructor(
             number.toIntOrNull() ?: throw NumberFormatException("Point number must be a number")
         require(pointNumber > 0) { "Point number must be greater than 0" }
         return pointNumber
+    }
+
+    private fun extractErrorTypeViewdata(e: Exception): PointScreenState.ErrorTypeViewData {
+        return when (e) {
+            is NerworkError -> extractNetworkError(e)
+            is NumberFormatException -> PointScreenState.ErrorTypeViewData.EmptyNumber
+            is IllegalArgumentException -> PointScreenState.ErrorTypeViewData.NegativeNumber
+            else -> PointScreenState.ErrorTypeViewData.Uncpecified
+        }
+    }
+
+    private fun extractNetworkError(e: Exception): PointScreenState.ErrorTypeViewData {
+        return if (e.cause is IllegalArgumentException) {
+            PointScreenState.ErrorTypeViewData.RequestedIncorrectnessError
+        } else {
+            PointScreenState.ErrorTypeViewData.RequstError
+        }
     }
 
     fun onPointNumberChanged(newValue: String) {

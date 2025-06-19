@@ -18,18 +18,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,31 +49,32 @@ internal fun PointScreenError(
                     Text(text = "😢", style = TextStyle(fontSize = 52.sp))
                     Spacer(Modifier.height(16.dp))
 
-
-
-                    val prefix = "Error ocured while reqiest points: "
                     val cause = when (errorTypeViewData) {
                         ErrorTypeViewData.None -> ""
                         ErrorTypeViewData.EmptyNumber -> "Request points number can't be empty"
                         ErrorTypeViewData.NegativeNumber -> "Request points number must be positive"
                         ErrorTypeViewData.RequstError -> "Something happened during request"
+                        ErrorTypeViewData.RequestedIncorrectnessError -> "Server returned incorrect points number. Either too big or too small."
                         ErrorTypeViewData.Uncpecified -> "Something went wrong"
                     }
-                    Text(
-                        text = buildAnnotatedString {
-                            appendLine(prefix)
-                            appendLine()
-                            addStyle(
-                                style = SpanStyle(fontSize = 16.sp),
-                                start = 0,
-                                end = prefix.length
-                            )
-                            appendLine(cause)
 
-                        },
-                        style = TextStyle(fontSize = 18.sp),
+                    Text(
+                        modifier = Modifier.padding(horizontal = 24.dp),
+                        text = "Error ocured while reqiest points:",
+                        style = MaterialTheme.typography.titleMedium,
                         textAlign = TextAlign.Center
                     )
+                    Spacer(Modifier.height(16.dp))
+                    CompositionLocalProvider(
+                        LocalContentColor provides MaterialTheme.colorScheme.error
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(horizontal = 24.dp),
+                            text = cause,
+                            style = MaterialTheme.typography.bodyLarge,
+                            textAlign = TextAlign.Center
+                        )
+                    }
                 }
             )
             Box(
@@ -87,7 +87,7 @@ internal fun PointScreenError(
                     BounceArrowIcon(
                         Modifier
                             .align(Alignment.CenterEnd)
-                            .padding(horizontal = 24.dp)
+                            .padding(horizontal = 32.dp)
                     )
                 }
             )

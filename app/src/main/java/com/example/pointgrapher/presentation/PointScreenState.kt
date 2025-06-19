@@ -9,11 +9,16 @@ data class PointScreenState(
     val errorTypeViewData: ErrorTypeViewData = ErrorTypeViewData.None
 ) {
     val isError: Boolean = errorTypeViewData != ErrorTypeViewData.None
+    val isInputError: Boolean =
+        errorTypeViewData == ErrorTypeViewData.EmptyNumber
+                || errorTypeViewData == ErrorTypeViewData.NegativeNumber
+                || errorTypeViewData == ErrorTypeViewData.RequestedIncorrectnessError
 
     enum class ErrorTypeViewData {
         None,
         EmptyNumber,
         NegativeNumber,
+        RequestedIncorrectnessError,
         RequstError,
         Uncpecified
     }

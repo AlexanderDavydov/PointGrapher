@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PointsResponse(
-    val pointDtos: List<PointDto>
+    val points: List<PointDto>
 )

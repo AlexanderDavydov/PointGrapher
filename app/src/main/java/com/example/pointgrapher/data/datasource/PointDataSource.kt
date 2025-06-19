@@ -10,9 +10,13 @@ class PointDataSource @Inject constructor(
     suspend fun getPoints(count: Int): List<PointDto> {
         val response = pointApi.getPoints(count)
         if (response.isSuccessful) {
-            return response.body()?.pointDtos ?: emptyList()
-        } else{
-            throw Exception("Failed to fetch points")
+            return response.body()?.points ?: emptyList()
+        } else {
+            throw if (response.code() == 400) {
+                IllegalArgumentException("Incorrect point number")
+            } else {
+                Exception("Failed to fetch points. Error code: ${response.code()}")
+            }
         }
     }
 }

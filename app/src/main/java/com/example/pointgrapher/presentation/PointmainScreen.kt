@@ -37,7 +37,7 @@ fun PointMainScreen(
         bottomBar = {
             if (state.isLoading.not()) {
                 PointBottomBar(
-                    pointNumber = state.requeredPointNumber,
+                    state = state,
                     onPointNumberChanged = viewModel::onPointNumberChanged,
                     onRequestClicked = viewModel::request
                 )
@@ -50,6 +50,7 @@ fun PointMainScreen(
                     modifier = Modifier.padding(paddingValues),
                     errorTypeViewData = state.errorTypeViewData
                 )
+
                 else -> SuccessContent(
                     viewData = state.points,
                     modifier = Modifier.padding(paddingValues)
@@ -61,7 +62,7 @@ fun PointMainScreen(
 
 @Composable
 private fun PointBottomBar(
-    pointNumber: String,
+    state: PointScreenState,
     onPointNumberChanged: (String) -> Unit,
     onRequestClicked: () -> Unit,
 ) {
@@ -71,16 +72,25 @@ private fun PointBottomBar(
             .navigationBarsPadding()
             .padding(top = 16.dp, bottom = 8.dp),
         content = {
-            val textState = remember(pointNumber) { mutableStateOf(pointNumber) }
+            val textState = remember(state.requeredPointNumber) {
+                mutableStateOf(state.requeredPointNumber)
+            }
+
             TextField(
-                modifier = Modifier.padding(start = 16.dp, end = 8.dp),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth()
+                    .weight(1f),
                 value = textState.value,
+                label = { Text(text = "Points number") },
+                isError = state.isInputError,
                 onValueChange = { onPointNumberChanged(it) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
             Button(
+                modifier = Modifier.padding(horizontal = 16.dp),
                 onClick = onRequestClicked,
-                content = { Text(text = "GO!") }
+                content = { Text(text = if (state.isError) "Go again!" else "GO!") }
             )
         }
     )
