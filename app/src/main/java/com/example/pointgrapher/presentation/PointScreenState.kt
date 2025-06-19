@@ -2,10 +2,19 @@ package com.example.pointgrapher.presentation
 
 import com.example.pointgrapher.domain.model.Point
 
-sealed interface PointScreenState {
-    data class Content(
-        val points: List<Point>
-    ) : PointScreenState
-    object Loading : PointScreenState
-    object Error : PointScreenState
+data class PointScreenState(
+    val points: List<Point> = emptyList(),
+    val requeredPointNumber: String = "10",
+    val isLoading: Boolean = false,
+    val errorTypeViewData: ErrorTypeViewData = ErrorTypeViewData.None
+) {
+    val isError: Boolean = errorTypeViewData != ErrorTypeViewData.None
+
+    enum class ErrorTypeViewData {
+        None,
+        EmptyNumber,
+        NegativeNumber,
+        RequstError,
+        Uncpecified
+    }
 }
