@@ -13,7 +13,7 @@ okhttp = "4.12.0"
 kotlin-serialization = "1.8.1"
 retrofit-serialization = "1.0.0"
 coroutines = "1.7.3"
-hilt = "2.49"
+hilt = "2.51.1"
 hilt-navigation-compose = "1.2.0"
 
 [libraries]
