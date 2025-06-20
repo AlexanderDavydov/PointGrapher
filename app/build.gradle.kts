@@ -54,19 +54,22 @@ dependencies {
     implementation(libs.androidx.material3)
 
     // Retrofit
-     implementation(libs.retrofit.core)
-     implementation(libs.retrofit.serialization)
-     implementation(libs.okhttp)
-     implementation(libs.okhttp.logging)
-     implementation(libs.kotlinx.serialization.json)
+    implementation(libs.retrofit.core)
+    implementation(libs.retrofit.serialization)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+    implementation(libs.kotlinx.serialization.json)
 
     // Coroutines bundle
-     implementation(libs.coroutines.core)
-     implementation(libs.coroutines.android)
+    implementation(libs.coroutines.core)
+    implementation(libs.coroutines.android)
 
     // Hilt bundle
     implementation(libs.bundles.hilt)
     kapt(libs.hilt.compiler)
+
+    // Vico Charts
+    implementation(libs.bundles.vico)
 
     // Testing
     testImplementation(libs.junit)

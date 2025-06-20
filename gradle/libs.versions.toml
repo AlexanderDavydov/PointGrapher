@@ -7,7 +7,7 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.9.1"
 activityCompose = "1.10.1"
-composeBom = "2025.06.00"
+composeBom = "2025.06.01"
 retrofit = "2.9.0"
 okhttp = "4.12.0"
 kotlin-serialization = "1.8.1"
@@ -15,6 +15,7 @@ retrofit-serialization = "1.0.0"
 coroutines = "1.7.3"
 hilt = "2.51.1"
 hilt-navigation-compose = "1.2.0"
+vico = "2.1.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -52,8 +53,13 @@ hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 
+# Vico
+vico-compose = { group = "com.patrykandpatrick.vico", name = "compose", version.ref = "vico" }
+vico-compose-m3 = { group = "com.patrykandpatrick.vico", name = "compose-m3", version.ref = "vico" }
+
 [bundles]
 hilt = ["hilt-android", "hilt-navigation-compose"]
+vico = ["vico-compose", "vico-compose-m3"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
