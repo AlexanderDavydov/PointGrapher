@@ -5,7 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.pointgrapher.presentation.points.ui.PointMainScreen
-import com.example.pointgrapher.presentation.ui.theme.PointGrapherTheme
+import com.example.pointgrapher.presentation.theme.PointGrapherTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
