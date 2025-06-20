@@ -6,4 +6,7 @@
     <string name="main_screen_input_label">Enter the number of points</string>
     <string name="main_screen_button_go">GO!</string>
     <string name="main_screen_button_go_again">Go again!</string>
+
+    <!-- Result screen -->
+    <string name="result_screen_title">Points batch result</string>
 </resources>

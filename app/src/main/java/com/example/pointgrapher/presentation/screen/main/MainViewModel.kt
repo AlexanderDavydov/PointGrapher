@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pointgrapher.domain.exeption.NerworkError
 import com.example.pointgrapher.domain.usecase.GetPointsUseCase
-import com.example.pointgrapher.presentation.points.PointViewModel
 import com.example.pointgrapher.presentation.screen.main.viewdata.MainScreenErrorTypeViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,7 +48,7 @@ class MainViewModel @Inject constructor(
                 _state.update { it.copy(errorTypeViewData = errorTypeViewData, isLoading = false) }
 
                 val logMessage = "Error while requesting ${state.value.requiredPointNumber} points"
-                Log.e(PointViewModel::class.java.name, logMessage, e)
+                Log.e(MainViewModel::class.java.name, logMessage, e)
             }
         }
     }
