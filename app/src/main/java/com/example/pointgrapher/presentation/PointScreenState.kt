@@ -4,7 +4,7 @@ import com.example.pointgrapher.domain.model.Point
 
 data class PointScreenState(
     val points: List<Point> = emptyList(),
-    val requeredPointNumber: String = "10",
+    val requiredPointNumber: String = "10",
     val isLoading: Boolean = false,
     val errorTypeViewData: ErrorTypeViewData = ErrorTypeViewData.None
 ) {
@@ -19,7 +19,7 @@ data class PointScreenState(
         EmptyNumber,
         NegativeNumber,
         RequestedIncorrectnessError,
-        RequstError,
-        Uncpecified
+        RequestError,
+        Unspecified
     }
 }

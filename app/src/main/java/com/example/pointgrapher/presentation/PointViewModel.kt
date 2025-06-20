@@ -24,7 +24,7 @@ class PointViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             try {
-                val pointNumber = doPreRequestChecks(state.value.requeredPointNumber)
+                val pointNumber = doPreRequestChecks(state.value.requiredPointNumber)
                 val points = getPointsUsecase(pointNumber)
                 _state.update {
                     it.copy(
@@ -37,7 +37,7 @@ class PointViewModel @Inject constructor(
                 val errorTypeViewData = extractErrorTypeViewdata(e)
                 _state.update { it.copy(errorTypeViewData = errorTypeViewData, isLoading = false) }
 
-                val logMessage = "Error while requesting ${state.value.requeredPointNumber} points"
+                val logMessage = "Error while requesting ${state.value.requiredPointNumber} points"
                 Log.e(PointViewModel::class.java.name, logMessage, e)
             }
         }
@@ -55,7 +55,7 @@ class PointViewModel @Inject constructor(
             is NerworkError -> extractNetworkError(e)
             is NumberFormatException -> PointScreenState.ErrorTypeViewData.EmptyNumber
             is IllegalArgumentException -> PointScreenState.ErrorTypeViewData.NegativeNumber
-            else -> PointScreenState.ErrorTypeViewData.Uncpecified
+            else -> PointScreenState.ErrorTypeViewData.Unspecified
         }
     }
 
@@ -63,7 +63,7 @@ class PointViewModel @Inject constructor(
         return if (e.cause is IllegalArgumentException) {
             PointScreenState.ErrorTypeViewData.RequestedIncorrectnessError
         } else {
-            PointScreenState.ErrorTypeViewData.RequstError
+            PointScreenState.ErrorTypeViewData.RequestError
         }
     }
 
@@ -73,6 +73,6 @@ class PointViewModel @Inject constructor(
             newValue.all { char -> char.isDigit() } -> newValue
             else -> return
         }
-        _state.update { it.copy(requeredPointNumber = stateValue) }
+        _state.update { it.copy(requiredPointNumber = stateValue) }
     }
 }

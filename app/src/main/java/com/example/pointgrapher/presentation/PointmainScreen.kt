@@ -72,8 +72,8 @@ private fun PointBottomBar(
             .navigationBarsPadding()
             .padding(top = 16.dp, bottom = 8.dp),
         content = {
-            val textState = remember(state.requeredPointNumber) {
-                mutableStateOf(state.requeredPointNumber)
+            val textState = remember(state.requiredPointNumber) {
+                mutableStateOf(state.requiredPointNumber)
             }
 
             TextField(

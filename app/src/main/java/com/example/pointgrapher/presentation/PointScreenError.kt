@@ -53,9 +53,9 @@ internal fun PointScreenError(
                         ErrorTypeViewData.None -> ""
                         ErrorTypeViewData.EmptyNumber -> "Request points number can't be empty"
                         ErrorTypeViewData.NegativeNumber -> "Request points number must be positive"
-                        ErrorTypeViewData.RequstError -> "Something happened during request"
+                        ErrorTypeViewData.RequestError -> "Something happened during request"
                         ErrorTypeViewData.RequestedIncorrectnessError -> "Server returned incorrect points number. Either too big or too small."
-                        ErrorTypeViewData.Uncpecified -> "Something went wrong"
+                        ErrorTypeViewData.Unspecified -> "Something went wrong"
                     }
 
                     Text(
