@@ -19,15 +19,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.pointgrapher.R
-import com.example.pointgrapher.domain.model.Point
 import com.example.pointgrapher.presentation.points.model.PointScreenState
 import com.example.pointgrapher.presentation.points.PointViewModel
 
@@ -56,7 +52,7 @@ fun PointMainScreen(
                 )
 
                 else -> SuccessContent(
-                    viewData = state.points,
+                    points = state.points,
                     modifier = Modifier.padding(paddingValues)
                 )
             }
@@ -109,20 +105,4 @@ private fun LoadingContent(modifier: Modifier) {
         contentAlignment = Alignment.Center,
         content = { CircularProgressIndicator() }
     )
-}
-
-@Composable
-fun SuccessContent(
-    viewData: List<Point>,
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "${viewData.size}",
-            style = TextStyle(fontSize = 48.sp, color = Color.Yellow)
-        )
-    }
 }

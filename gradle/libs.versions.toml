@@ -59,7 +59,6 @@ vico-compose-m3 = { group = "com.patrykandpatrick.vico", name = "compose-m3", ve
 
 [bundles]
 hilt = ["hilt-android", "hilt-navigation-compose"]
-vico = ["vico-compose", "vico-compose-m3"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

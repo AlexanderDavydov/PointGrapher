@@ -69,7 +69,8 @@ dependencies {
     kapt(libs.hilt.compiler)
 
     // Vico Charts
-    implementation(libs.bundles.vico)
+    implementation(libs.vico.compose)
+    implementation(libs.vico.compose.m3)
 
     // Testing
     testImplementation(libs.junit)

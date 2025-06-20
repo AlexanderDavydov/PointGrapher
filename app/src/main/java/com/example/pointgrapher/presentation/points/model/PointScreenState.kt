@@ -1,9 +1,7 @@
 package com.example.pointgrapher.presentation.points.model
 
-import com.example.pointgrapher.domain.model.Point
-
 data class PointScreenState(
-    val points: List<Point> = emptyList(),
+    val points: PointViewData = PointViewData.Empty,
     val requiredPointNumber: String = "10",
     val isLoading: Boolean = false,
     val errorTypeViewData: ErrorTypeViewData = ErrorTypeViewData.None
@@ -13,6 +11,16 @@ data class PointScreenState(
         errorTypeViewData == ErrorTypeViewData.EmptyNumber
                 || errorTypeViewData == ErrorTypeViewData.NegativeNumber
                 || errorTypeViewData == ErrorTypeViewData.RequestedIncorrectnessError
+
+    data class PointViewData(
+        val x: Collection<Number>,
+        val y: Collection<Number>
+    ) {
+        companion object {
+            val Empty = PointViewData(emptyList(), emptyList())
+        }
+    }
+
 
     enum class ErrorTypeViewData {
         None,

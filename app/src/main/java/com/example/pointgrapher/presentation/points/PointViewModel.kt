@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pointgrapher.domain.exeption.NerworkError
+import com.example.pointgrapher.domain.model.Point
 import com.example.pointgrapher.domain.usecase.GetPointsUsecase
 import com.example.pointgrapher.presentation.points.model.PointScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,7 +30,7 @@ class PointViewModel @Inject constructor(
                 val points = getPointsUsecase(pointNumber)
                 _state.update {
                     it.copy(
-                        points = points,
+                        points = points.mapToViewData(),
                         isLoading = false,
                         errorTypeViewData = PointScreenState.ErrorTypeViewData.None
                     )
@@ -77,3 +78,6 @@ class PointViewModel @Inject constructor(
         _state.update { it.copy(requiredPointNumber = stateValue) }
     }
 }
+
+private fun List<Point>.mapToViewData(): PointScreenState.PointViewData =
+    PointScreenState.PointViewData(x = map { it.x }, y = map { it.y })
