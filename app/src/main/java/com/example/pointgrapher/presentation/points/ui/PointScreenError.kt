@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation
+package com.example.pointgrapher.presentation.points.ui
 
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
@@ -32,7 +32,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.pointgrapher.presentation.PointScreenState.ErrorTypeViewData
+import com.example.pointgrapher.presentation.points.model.PointScreenState.ErrorTypeViewData
 
 @Composable
 internal fun PointScreenError(

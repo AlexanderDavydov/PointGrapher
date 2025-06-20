@@ -1,10 +1,11 @@
-package com.example.pointgrapher.presentation
+package com.example.pointgrapher.presentation.points
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pointgrapher.domain.exeption.NerworkError
 import com.example.pointgrapher.domain.usecase.GetPointsUsecase
+import com.example.pointgrapher.presentation.points.model.PointScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

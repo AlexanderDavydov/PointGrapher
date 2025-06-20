@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation
+package com.example.pointgrapher.presentation.points.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -20,12 +20,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.pointgrapher.R
 import com.example.pointgrapher.domain.model.Point
+import com.example.pointgrapher.presentation.points.model.PointScreenState
+import com.example.pointgrapher.presentation.points.PointViewModel
 
 @Composable
 fun PointMainScreen(
@@ -87,10 +91,12 @@ private fun PointBottomBar(
                 onValueChange = { onPointNumberChanged(it) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
             )
+
+            val buttonTextRes = if (state.isError) R.string.go_again else R.string.go
             Button(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 onClick = onRequestClicked,
-                content = { Text(text = if (state.isError) "Go again!" else "GO!") }
+                content = { Text(text = stringResource(buttonTextRes)) }
             )
         }
     )

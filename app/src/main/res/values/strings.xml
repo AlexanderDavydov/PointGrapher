@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PointGrapher</string>
+    <string name="go_again">Go again!</string>
+    <string name="go">GO!</string>
 </resources>

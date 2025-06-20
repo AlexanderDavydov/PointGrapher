@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation
+package com.example.pointgrapher.presentation.points.model
 
 import com.example.pointgrapher.domain.model.Point
 

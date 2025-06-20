@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.ui.theme
+package com.example.pointgrapher.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
