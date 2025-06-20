@@ -5,7 +5,7 @@ import com.example.pointgrapher.domain.model.Point
 import com.example.pointgrapher.domain.repository.PointProviderRepository
 import javax.inject.Inject
 
-class GetPointsUsecase @Inject constructor(
+class GetPointsUseCase @Inject constructor(
     private val pointProviderRepository: PointProviderRepository
 ) {
     operator suspend fun invoke(count: Int): List<Point> {
