@@ -9,7 +9,7 @@ import com.example.pointgrapher.presentation.screen.main.viewdata.MainScreenErro
 data class MainScreenState(
     val requiredPointNumber: String = "10",
     val isLoading: Boolean = false,
-    val errorTypeViewData: MainScreenErrorTypeViewData = None
+    val errorTypeViewData: MainScreenErrorTypeViewData = None,
 ) {
     val isError: Boolean = errorTypeViewData != None
     val isInputError: Boolean =

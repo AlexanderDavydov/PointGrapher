@@ -10,6 +10,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -22,9 +23,15 @@ import com.example.pointgrapher.presentation.screen.result.ResultViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ResultScreen(
-    viewModel: ResultViewModel = hiltViewModel(),
+    batchId: String,
+    onBack: () -> Unit,
+    viewModel: ResultViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
+
+    LaunchedEffect(batchId) {
+        viewModel.onBatchIdChanged(batchId)
+    }
 
     Scaffold(
         topBar = {
@@ -32,7 +39,7 @@ internal fun ResultScreen(
                 title = { Text(stringResource(R.string.result_screen_title)) },
                 navigationIcon = {
                     IconButton(
-                        onClick = viewModel::onBackClicked,
+                        onClick = onBack,
                         content = {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Default.ArrowBack,

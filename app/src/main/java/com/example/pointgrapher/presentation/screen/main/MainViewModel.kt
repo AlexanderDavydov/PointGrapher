@@ -7,7 +7,10 @@ import com.example.pointgrapher.domain.exeption.NerworkError
 import com.example.pointgrapher.domain.usecase.GetPointsUseCase
 import com.example.pointgrapher.presentation.screen.main.viewdata.MainScreenErrorTypeViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -21,6 +24,13 @@ class MainViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(MainScreenState())
     val state = _state.asStateFlow()
+
+    private val _navigation = MutableSharedFlow<MainScreenNavigation>(
+        replay = 0,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val navigation = _navigation.asSharedFlow()
 
     fun onPointNumberChanged(newValue: String) {
         val stateValue = when {
@@ -43,6 +53,9 @@ class MainViewModel @Inject constructor(
                         errorTypeViewData = MainScreenErrorTypeViewData.None
                     )
                 }
+
+                _navigation.tryEmit(MainScreenNavigation("ss"))
+
             } catch (e: Exception) {
                 val errorTypeViewData = extractErrorTypeViewdata(e)
                 _state.update { it.copy(errorTypeViewData = errorTypeViewData, isLoading = false) }

@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.example.pointgrapher"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.pointgrapher"
@@ -53,6 +53,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
+    // Jetpack Navigation 3
+    implementation(libs.androidx.navigation3.runtime)
+    implementation(libs.androidx.navigation3.ui)
+
     // Retrofit
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.serialization)
@@ -65,7 +69,8 @@ dependencies {
     implementation(libs.coroutines.android)
 
     // Hilt bundle
-    implementation(libs.bundles.hilt)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
     kapt(libs.hilt.compiler)
 
     // Vico Charts

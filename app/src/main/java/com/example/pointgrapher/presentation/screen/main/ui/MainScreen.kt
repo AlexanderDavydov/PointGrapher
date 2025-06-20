@@ -28,6 +28,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -43,11 +44,13 @@ import com.example.pointgrapher.R
 import com.example.pointgrapher.presentation.screen.main.MainScreenState
 import com.example.pointgrapher.presentation.screen.main.MainViewModel
 import com.example.pointgrapher.presentation.screen.main.viewdata.MainScreenErrorTypeViewData
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun MainScreen(
-    viewModel: MainViewModel = hiltViewModel()
+    viewModel: MainViewModel = hiltViewModel(),
+    onOpenResultScreen: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
 
@@ -66,6 +69,13 @@ internal fun MainScreen(
             )
         }
     )
+
+    LaunchedEffect(Unit) {
+        launch {
+            viewModel.navigation
+                .collect { onOpenResultScreen(it.batchId) }
+        }
+    }
 }
 
 @Composable

@@ -7,14 +7,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class ResultViewModel @Inject constructor() : ViewModel() {
+class ResultViewModel @Inject constructor(
+
+) : ViewModel() {
 
     private val _state = MutableStateFlow(ResultState.Loading)
     val state = _state.asStateFlow()
 
 
-    fun onBackClicked() {
-
+    fun onBatchIdChanged(batchId: String) {
     }
 
 
