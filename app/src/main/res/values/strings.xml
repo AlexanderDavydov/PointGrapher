@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">PointGrapher</string>
-    <string name="go_again">Go again!</string>
-    <string name="go">GO!</string>
+
+    <!-- Main screen -->
+    <string name="main_screen_explanation">Request the coordinates of points from the server and displays them in the form of a table and graph</string>
+    <string name="main_screen_input_label">Enter the number of points</string>
+    <string name="main_screen_button_go">GO!</string>
+    <string name="main_screen_button_go_again">Go again!</string>
 </resources>

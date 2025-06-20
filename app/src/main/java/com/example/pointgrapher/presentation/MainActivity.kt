@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.example.pointgrapher.presentation.points.ui.PointMainScreen
+import com.example.pointgrapher.presentation.screen.main.ui.MainScreen
 import com.example.pointgrapher.presentation.theme.PointGrapherTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +15,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PointGrapherTheme {
-                PointMainScreen()
+                MainScreen()
             }
         }
     }
