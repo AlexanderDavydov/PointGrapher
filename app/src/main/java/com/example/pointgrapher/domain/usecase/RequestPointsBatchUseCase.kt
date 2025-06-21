@@ -1,16 +1,15 @@
 package com.example.pointgrapher.domain.usecase
 
-import com.example.pointgrapher.domain.exeption.NerworkError
-import com.example.pointgrapher.domain.model.Point
+import com.example.pointgrapher.domain.exception.NerworkError
 import com.example.pointgrapher.domain.repository.PointProviderRepository
 import javax.inject.Inject
 
-class GetPointsUseCase @Inject constructor(
+class RequestPointsBatchUseCase @Inject constructor(
     private val pointProviderRepository: PointProviderRepository
 ) {
-    operator suspend fun invoke(count: Int): List<Point> {
+    suspend operator fun invoke(count: Int): String {
         return try {
-            pointProviderRepository.getPoints(count)
+            pointProviderRepository.requestPoints(count)
         } catch (e: Exception) {
             throw NerworkError(e)
         }
