@@ -2,6 +2,7 @@ package com.example.pointgrapher.domain.repository
 
 import com.example.pointgrapher.domain.model.BatchInfo
 import com.example.pointgrapher.domain.model.PointBatch
+import kotlinx.coroutines.flow.Flow
 
 
 interface PointProviderRepository {
@@ -29,7 +30,7 @@ interface PointProviderRepository {
      *
      * @return A list of batches.
      */
-    suspend fun getAllBatches(): List<BatchInfo>
+    fun observeAllBatches(): Flow<List<BatchInfo>>
 
     /**
      * Deletes a batch of points from the data source.

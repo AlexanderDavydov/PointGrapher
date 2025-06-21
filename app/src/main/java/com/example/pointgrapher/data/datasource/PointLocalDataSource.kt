@@ -7,11 +7,12 @@ import com.example.pointgrapher.data.db.entity.PointEntity
 import com.example.pointgrapher.data.model.BatchDto
 import com.example.pointgrapher.data.model.PointDto
 import com.example.pointgrapher.domain.exception.BatchNotFoundException
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PointLocalDataSource @Inject constructor(
-    private val batchDao: BatchDao,
-    private val pointDao: PointDao
+    private val batchDao: BatchDao, private val pointDao: PointDao
 ) {
 
     /**
@@ -24,9 +25,7 @@ class PointLocalDataSource @Inject constructor(
         val timestamp = System.currentTimeMillis()
 
         val batchEntity = BatchEntity(
-            id = batchId,
-            actualCount = points.size,
-            timestamp = timestamp
+            id = batchId, actualCount = points.size, timestamp = timestamp
         )
         batchDao.insertBatch(batchEntity)
 
@@ -46,15 +45,16 @@ class PointLocalDataSource @Inject constructor(
         }
     }
 
-    suspend fun getAllBatches(): List<BatchDto> {
-        return batchDao.getAllBatches()
-            .map { entity ->
+    fun observeAllBatches(): Flow<List<BatchDto>> {
+        return batchDao.observeAllBatches().map { entitys ->
+            entitys.map { entity ->
                 BatchDto(
                     id = entity.id,
                     actualCount = entity.actualCount,
                     timestamp = entity.timestamp
                 )
             }
+        }
     }
 
     suspend fun deleteBatch(batchId: String) {

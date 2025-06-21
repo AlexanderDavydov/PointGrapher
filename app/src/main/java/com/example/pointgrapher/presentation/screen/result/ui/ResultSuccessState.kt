@@ -53,6 +53,7 @@ private fun ScrollableTable(
     Row(
         modifier = modifier.horizontalScroll(rememberScrollState()),
         content = {
+            // TODO use lazy column
             Column {
                 points.x.forEachIndexed { index, point ->
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {

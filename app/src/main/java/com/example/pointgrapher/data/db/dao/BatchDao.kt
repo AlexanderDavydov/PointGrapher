@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.pointgrapher.data.db.entity.BatchEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BatchDao {
@@ -16,7 +17,7 @@ interface BatchDao {
     suspend fun getBatchById(batchId: String): BatchEntity?
 
     @Query("SELECT * FROM batches ORDER BY timestamp DESC")
-    suspend fun getAllBatches(): List<BatchEntity>
+    fun observeAllBatches(): Flow<List<BatchEntity>>
 
     @Query("DELETE FROM batches WHERE id = :batchId")
     suspend fun deleteBatchById(batchId: String)

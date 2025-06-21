@@ -6,6 +6,14 @@
     <string name="main_screen_input_label">Enter the number of points</string>
     <string name="main_screen_button_go">GO!</string>
     <string name="main_screen_button_go_again">Go again!</string>
+    <string name="main_screen_try_again">please try again</string>
+    <string name="main_screen_batch_list_title">List of previous batches</string>
+    <string name="main_screen_error_occurred">Error occurred while request points</string>
+    <string name="main_screen_error_empty_points_number">Request points number can\'t be empty</string>
+    <string name="main_screen_error_positive_points_number">Request points number must be positive</string>
+    <string name="main_screen_error_something_happened_during_request">Something happened during request</string>
+    <string name="main_screen_error_server_incorrect_points">Server returned incorrect points number error. Value either too big or too small.</string>
+    <string name="main_screen_error_general">Something went wrong</string>
 
     <!-- Result screen -->
     <string name="result_screen_title">Points batch result</string>

@@ -1,5 +1,6 @@
 package com.example.pointgrapher.presentation.screen.main
 
+import com.example.pointgrapher.domain.model.BatchInfo
 import com.example.pointgrapher.presentation.screen.main.viewdata.MainScreenErrorTypeViewData
 import com.example.pointgrapher.presentation.screen.main.viewdata.MainScreenErrorTypeViewData.EmptyNumber
 import com.example.pointgrapher.presentation.screen.main.viewdata.MainScreenErrorTypeViewData.NegativeNumber
@@ -10,6 +11,7 @@ data class MainScreenState(
     val requiredPointNumber: String = "10",
     val isLoading: Boolean = false,
     val errorTypeViewData: MainScreenErrorTypeViewData = None,
+    val batches: List<BatchInfo> = emptyList()
 ) {
     val isError: Boolean = errorTypeViewData != None
     val isInputError: Boolean =

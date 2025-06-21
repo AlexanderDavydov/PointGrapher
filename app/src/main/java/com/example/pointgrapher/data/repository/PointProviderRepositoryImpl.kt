@@ -5,6 +5,8 @@ import com.example.pointgrapher.data.datasource.PointRemoteDataSource
 import com.example.pointgrapher.domain.model.BatchInfo
 import com.example.pointgrapher.domain.model.PointBatch
 import com.example.pointgrapher.domain.repository.PointProviderRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import java.util.UUID
 import javax.inject.Inject
 
@@ -32,11 +34,13 @@ class PointProviderRepositoryImpl @Inject constructor(
         return PointBatch(x = xCoords, y = yCoords)
     }
 
-    override suspend fun getAllBatches(): List<BatchInfo> {
-        return pointLocalDataSource.getAllBatches()
-            .map {
+    override fun observeAllBatches(): Flow<List<BatchInfo>> {
+        return pointLocalDataSource.observeAllBatches().map {
+            it.map {
                 BatchInfo(id = it.id, numberOfPoints = it.actualCount, timestamp = it.timestamp)
             }
+        }
+
     }
 
     override suspend fun deleteBatch(batchId: String) {

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pointgrapher.domain.exception.NerworkError
+import com.example.pointgrapher.domain.usecase.ObserveBatchesUseCase
 import com.example.pointgrapher.domain.usecase.RequestPointsBatchUseCase
 import com.example.pointgrapher.presentation.screen.main.viewdata.MainScreenErrorTypeViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val requestPointsBatchUseCase: RequestPointsBatchUseCase
+    private val requestPointsBatchUseCase: RequestPointsBatchUseCase,
+    observeBatchesUseCase: ObserveBatchesUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(MainScreenState())
@@ -30,6 +32,14 @@ class MainViewModel @Inject constructor(
         onBufferOverflow = BufferOverflow.DROP_OLDEST
     )
     val navigation = _navigation.asSharedFlow()
+
+    init {
+        viewModelScope.launch {
+            observeBatchesUseCase().collect { batches ->
+                _state.update { it.copy(batches = batches) }
+            }
+        }
+    }
 
     fun onPointNumberChanged(newValue: String) {
         val stateValue = when {
@@ -54,13 +64,22 @@ class MainViewModel @Inject constructor(
                 }
                 _navigation.tryEmit(MainScreenNavigation(batchId))
             } catch (e: Exception) {
-                val errorTypeViewData = extractErrorTypeViewdata(e)
-                _state.update { it.copy(errorTypeViewData = errorTypeViewData, isLoading = false) }
+                val errorTypeViewData = extractErrorTypeViewData(e)
+                _state.update {
+                    it.copy(
+                        errorTypeViewData = errorTypeViewData,
+                        isLoading = false
+                    )
+                }
 
                 val logMessage = "Error while requesting ${state.value.requiredPointNumber} points"
                 Log.e(MainViewModel::class.java.name, logMessage, e)
             }
         }
+    }
+
+    fun onBatchClicked(batchId: String) {
+        _navigation.tryEmit(MainScreenNavigation(batchId))
     }
 
     private fun doPreRequestChecks(number: String): Int {
@@ -70,7 +89,7 @@ class MainViewModel @Inject constructor(
         return pointNumber
     }
 
-    private fun extractErrorTypeViewdata(e: Exception): MainScreenErrorTypeViewData {
+    private fun extractErrorTypeViewData(e: Exception): MainScreenErrorTypeViewData {
         return when (e) {
             is NerworkError -> extractNetworkError(e)
             is NumberFormatException -> MainScreenErrorTypeViewData.EmptyNumber
