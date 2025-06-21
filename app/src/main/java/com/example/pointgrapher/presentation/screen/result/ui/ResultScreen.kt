@@ -43,7 +43,7 @@ internal fun ResultScreen(
                         content = {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Default.ArrowBack,
-                                contentDescription = "Localized description"
+                                contentDescription = "Go Back"
                             )
                         }
                     )
