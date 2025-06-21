@@ -3,8 +3,8 @@ package com.example.pointgrapher.presentation.screen.main
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.pointgrapher.domain.exeption.NerworkError
-import com.example.pointgrapher.domain.usecase.GetPointsUseCase
+import com.example.pointgrapher.domain.exception.NerworkError
+import com.example.pointgrapher.domain.usecase.RequestPointsBatchUseCase
 import com.example.pointgrapher.presentation.screen.main.viewdata.MainScreenErrorTypeViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
@@ -18,8 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    // TODO use another use case
-    private val getPointsUseCase: GetPointsUseCase
+    private val requestPointsBatchUseCase: RequestPointsBatchUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(MainScreenState())
@@ -46,16 +45,14 @@ class MainViewModel @Inject constructor(
             _state.update { it.copy(isLoading = true) }
             try {
                 val pointNumber = doPreRequestChecks(state.value.requiredPointNumber)
-                val points = getPointsUseCase(pointNumber)
+                val batchId = requestPointsBatchUseCase(pointNumber)
                 _state.update {
                     it.copy(
                         isLoading = false,
                         errorTypeViewData = MainScreenErrorTypeViewData.None
                     )
                 }
-
-                _navigation.tryEmit(MainScreenNavigation("ss"))
-
+                _navigation.tryEmit(MainScreenNavigation(batchId))
             } catch (e: Exception) {
                 val errorTypeViewData = extractErrorTypeViewdata(e)
                 _state.update { it.copy(errorTypeViewData = errorTypeViewData, isLoading = false) }
