@@ -17,4 +17,7 @@ interface BatchDao {
 
     @Query("SELECT * FROM batches ORDER BY timestamp DESC")
     suspend fun getAllBatches(): List<BatchEntity>
+
+    @Query("DELETE FROM batches WHERE id = :batchId")
+    suspend fun deleteBatchById(batchId: String)
 }
