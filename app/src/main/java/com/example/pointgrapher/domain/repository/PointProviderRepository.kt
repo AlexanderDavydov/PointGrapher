@@ -4,7 +4,6 @@ import com.example.pointgrapher.domain.model.BatchInfo
 import com.example.pointgrapher.domain.model.PointBatch
 import kotlinx.coroutines.flow.Flow
 
-
 interface PointProviderRepository {
 
     /**
