@@ -1,6 +1,6 @@
 package com.example.pointgrapher.domain.usecase
 
-import com.example.pointgrapher.domain.exception.NerworkError
+import com.example.pointgrapher.domain.exception.NetworkError
 import com.example.pointgrapher.domain.repository.PointProviderRepository
 import javax.inject.Inject
 
@@ -11,7 +11,7 @@ class RequestPointsBatchUseCase @Inject constructor(
         return try {
             pointProviderRepository.requestPoints(count)
         } catch (e: Exception) {
-            throw NerworkError(e)
+            throw NetworkError(e)
         }
     }
 }

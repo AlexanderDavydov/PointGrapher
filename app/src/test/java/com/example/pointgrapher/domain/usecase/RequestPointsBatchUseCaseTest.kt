@@ -1,7 +1,7 @@
 package com.example.pointgrapher.domain.usecase
 
 import com.example.pointgrapher.TestDataFactory
-import com.example.pointgrapher.domain.exception.NerworkError
+import com.example.pointgrapher.domain.exception.NetworkError
 import com.example.pointgrapher.domain.repository.PointProviderRepository
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
@@ -41,7 +41,7 @@ class RequestPointsBatchUseCaseTest {
         // When & Then
         try {
             useCase(count)
-        } catch (e: NerworkError) {
+        } catch (e: NetworkError) {
             assertThat(e.cause).isEqualTo(originalException)
         }
 
@@ -59,7 +59,7 @@ class RequestPointsBatchUseCaseTest {
             // When & Then
             try {
                 useCase(count)
-            } catch (e: NerworkError) {
+            } catch (e: NetworkError) {
                 assertThat(e.cause).isEqualTo(illegalArgumentException)
                 assertThat(e.cause).isInstanceOf(IllegalArgumentException::class.java)
             }
@@ -77,7 +77,7 @@ class RequestPointsBatchUseCaseTest {
         // When & Then
         try {
             useCase(count)
-        } catch (e: NerworkError) {
+        } catch (e: NetworkError) {
             assertThat(e.cause).isEqualTo(runtimeException)
         }
 

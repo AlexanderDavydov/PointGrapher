@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pointgrapher.domain.exception.BatchNotFoundException
-import com.example.pointgrapher.domain.exception.NerworkError
+import com.example.pointgrapher.domain.exception.NetworkError
 import com.example.pointgrapher.domain.model.BatchInfo
 import com.example.pointgrapher.domain.usecase.DeletePointBatchUseCase
 import com.example.pointgrapher.domain.usecase.ObserveBatchesUseCase
@@ -114,7 +114,7 @@ class MainViewModel @Inject constructor(
 
     private fun extractErrorTypeViewData(e: Exception): MainScreenErrorTypeViewData {
         return when (e) {
-            is NerworkError -> extractNetworkError(e)
+            is NetworkError -> extractNetworkError(e)
             is NumberFormatException -> MainScreenErrorTypeViewData.EmptyNumber
             is IllegalArgumentException -> MainScreenErrorTypeViewData.NegativeNumber
             else -> MainScreenErrorTypeViewData.Unspecified
