@@ -31,5 +31,11 @@ class ResultViewModel @Inject constructor(
         }
     }
 
-    private fun PointBatch.mapToViewData(): PointViewData = PointViewData(x = x, y = y)
+    private fun PointBatch.mapToViewData(): PointViewData {
+        val sorted = x.zip(y).sortedBy { it.first }
+        return PointViewData(
+            x = sorted.map { it.first },
+            y = sorted.map { it.second }
+        )
+    }
 }
