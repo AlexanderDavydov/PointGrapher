@@ -12,7 +12,8 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PointLocalDataSource @Inject constructor(
-    private val batchDao: BatchDao, private val pointDao: PointDao
+    private val batchDao: BatchDao,
+    private val pointDao: PointDao
 ) {
 
     /**

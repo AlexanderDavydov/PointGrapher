@@ -3,9 +3,13 @@ package com.example.pointgrapher.presentation.screen.main
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.pointgrapher.domain.exception.BatchNotFoundException
 import com.example.pointgrapher.domain.exception.NerworkError
+import com.example.pointgrapher.domain.model.BatchInfo
+import com.example.pointgrapher.domain.usecase.DeletePointBatchUseCase
 import com.example.pointgrapher.domain.usecase.ObserveBatchesUseCase
 import com.example.pointgrapher.domain.usecase.RequestPointsBatchUseCase
+import com.example.pointgrapher.presentation.screen.main.viewdata.BatchInfoViewData
 import com.example.pointgrapher.presentation.screen.main.viewdata.MainScreenErrorTypeViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
@@ -15,11 +19,13 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val requestPointsBatchUseCase: RequestPointsBatchUseCase,
+    private val deletePointBatchUseCase: DeletePointBatchUseCase,
     observeBatchesUseCase: ObserveBatchesUseCase
 ) : ViewModel() {
 
@@ -35,9 +41,10 @@ class MainViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            observeBatchesUseCase().collect { batches ->
-                _state.update { it.copy(batches = batches) }
-            }
+            observeBatchesUseCase()
+                .collect { batches ->
+                    _state.update { it.copy(batches = batches.toViewData()) }
+                }
         }
     }
 
@@ -82,6 +89,22 @@ class MainViewModel @Inject constructor(
         _navigation.tryEmit(MainScreenNavigation(batchId))
     }
 
+    fun onBatchDeleted(batchId: String) {
+        viewModelScope.launch {
+            try {
+                deletePointBatchUseCase(batchId)
+            } catch (e: Exception) {
+                val logMessage = if (e is BatchNotFoundException) {
+                    // Batch was already deleted, no need to show anything to the user
+                    "Batch $batchId was already deleted"
+                } else {
+                    "Error while deleting batch $batchId"
+                }
+                Log.i(MainViewModel::class.java.name, logMessage)
+            }
+        }
+    }
+
     private fun doPreRequestChecks(number: String): Int {
         val pointNumber =
             number.toIntOrNull() ?: throw NumberFormatException("Point number must be a number")
@@ -105,4 +128,7 @@ class MainViewModel @Inject constructor(
             MainScreenErrorTypeViewData.RequestError
         }
     }
+
+    private fun List<BatchInfo>.toViewData(): List<BatchInfoViewData> =
+        map { BatchInfoViewData(it.id, it.numberOfPoints, Date(it.timestamp)) }
 }

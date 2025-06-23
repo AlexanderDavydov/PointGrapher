@@ -51,7 +51,8 @@ internal fun MainScreen(
                     modifier = Modifier.padding(paddingValues),
                     onPointNumberChanged = viewModel::onPointNumberChanged,
                     onRequestClicked = viewModel::request,
-                    onBatchClicked = viewModel::onBatchClicked
+                    onBatchClicked = viewModel::onBatchClicked,
+                    onBatchDeleted = viewModel::onBatchDeleted,
                 )
             } else {
                 MainScreenContentPortrait(
@@ -59,7 +60,8 @@ internal fun MainScreen(
                     modifier = Modifier.padding(paddingValues),
                     onPointNumberChanged = viewModel::onPointNumberChanged,
                     onRequestClicked = viewModel::request,
-                    onBatchClicked = viewModel::onBatchClicked
+                    onBatchClicked = viewModel::onBatchClicked,
+                    onBatchDeleted = viewModel::onBatchDeleted,
                 )
             }
         }
@@ -79,6 +81,7 @@ private fun MainScreenContentPortrait(
     onPointNumberChanged: (String) -> Unit,
     onRequestClicked: () -> Unit,
     onBatchClicked: (String) -> Unit,
+    onBatchDeleted: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -90,7 +93,8 @@ private fun MainScreenContentPortrait(
                 Spacer(modifier = Modifier.height(16.dp))
                 MainScreenBatchList(
                     batches = state.batches,
-                    onBatchClicked = onBatchClicked
+                    onBatchClicked = onBatchClicked,
+                    onBatchDeleted = onBatchDeleted
                 )
             }
         }
@@ -136,6 +140,7 @@ private fun MainScreenContentLandscape(
     onPointNumberChanged: (String) -> Unit,
     onRequestClicked: () -> Unit,
     onBatchClicked: (String) -> Unit,
+    onBatchDeleted: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
@@ -146,7 +151,8 @@ private fun MainScreenContentLandscape(
             MainContentLandscapeLeft(
                 modifier = Modifier.weight(0.5f),
                 state = state,
-                onBatchClicked = onBatchClicked
+                onBatchClicked = onBatchClicked,
+                onBatchDeleted = onBatchDeleted
             )
             MainContentLandscapeRight(
                 modifier = Modifier.weight(0.5f),
@@ -162,11 +168,10 @@ private fun MainScreenContentLandscape(
 private fun MainContentLandscapeLeft(
     state: MainScreenState,
     onBatchClicked: (String) -> Unit,
+    onBatchDeleted: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier
-    ) {
+    Column(modifier = modifier) {
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
             text = stringResource(R.string.main_screen_explanation),
@@ -176,7 +181,8 @@ private fun MainContentLandscapeLeft(
         if (state.batches.isNotEmpty()) {
             MainScreenBatchList(
                 batches = state.batches,
-                onBatchClicked = onBatchClicked
+                onBatchClicked = onBatchClicked,
+                onBatchDeleted = onBatchDeleted
             )
         }
     }
