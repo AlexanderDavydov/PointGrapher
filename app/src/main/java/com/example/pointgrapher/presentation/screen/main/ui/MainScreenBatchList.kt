@@ -30,7 +30,7 @@ internal fun MainScreenBatchList(
     Text(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 32.dp),
+            .padding(horizontal = 16.dp),
         text = stringResource(R.string.main_screen_batch_list_title),
         style = MaterialTheme.typography.titleMedium
     )
@@ -63,17 +63,17 @@ private fun BatchInfoListItem(
             .fillMaxWidth(),
         content = {
             Text(
-                modifier = Modifier.padding(horizontal = 32.dp),
+                modifier = Modifier.padding(horizontal = 16.dp),
                 text = "Batch of ${batchInfo.numberOfPoints} items",
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
-                modifier = Modifier.padding(horizontal = 32.dp),
+                modifier = Modifier.padding(horizontal = 16.dp),
                 text = "Created: ${formatTimestamp(batchInfo.timestamp)}",
                 style = MaterialTheme.typography.bodyMedium
             )
             Text(
-                modifier = Modifier.padding(horizontal = 32.dp),
+                modifier = Modifier.padding(horizontal = 16.dp),
                 text = "ID: ${batchInfo.id}",
                 style = MaterialTheme.typography.bodyMedium
             )

@@ -1,37 +1,32 @@
 package com.example.pointgrapher.presentation.screen.main.ui
 
-import androidx.compose.animation.AnimatedContent
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Button
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.pointgrapher.R
 import com.example.pointgrapher.presentation.screen.main.MainScreenState
 import com.example.pointgrapher.presentation.screen.main.MainViewModel
-import com.example.pointgrapher.presentation.screen.main.viewdata.MainScreenErrorTypeViewData
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -49,13 +44,24 @@ internal fun MainScreen(
             )
         },
         content = { paddingValues ->
-            MainScreenContent(
-                state = state,
-                modifier = Modifier.padding(paddingValues),
-                onPointNumberChanged = viewModel::onPointNumberChanged,
-                onRequestClicked = viewModel::request,
-                onBatchClicked = viewModel::onBatchClicked
-            )
+            val configuration = LocalConfiguration.current
+            if (configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                MainScreenContentLandscape(
+                    state = state,
+                    modifier = Modifier.padding(paddingValues),
+                    onPointNumberChanged = viewModel::onPointNumberChanged,
+                    onRequestClicked = viewModel::request,
+                    onBatchClicked = viewModel::onBatchClicked
+                )
+            } else {
+                MainScreenContentPortrait(
+                    state = state,
+                    modifier = Modifier.padding(paddingValues),
+                    onPointNumberChanged = viewModel::onPointNumberChanged,
+                    onRequestClicked = viewModel::request,
+                    onBatchClicked = viewModel::onBatchClicked
+                )
+            }
         }
     )
 
@@ -68,7 +74,7 @@ internal fun MainScreen(
 }
 
 @Composable
-private fun MainScreenContent(
+private fun MainScreenContentPortrait(
     state: MainScreenState,
     onPointNumberChanged: (String) -> Unit,
     onRequestClicked: () -> Unit,
@@ -79,7 +85,7 @@ private fun MainScreenContent(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         content = {
-            MainContent(state, onPointNumberChanged, onRequestClicked)
+            MainContentPortrait(state, onPointNumberChanged, onRequestClicked)
             if (state.batches.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(16.dp))
                 MainScreenBatchList(
@@ -92,92 +98,115 @@ private fun MainScreenContent(
 }
 
 @Composable
-private fun MainContent(
+private fun MainContentPortrait(
     state: MainScreenState,
     onPointNumberChanged: (String) -> Unit,
     onRequestClicked: () -> Unit
 ) {
     Spacer(modifier = Modifier.height(16.dp))
     Text(
-        modifier = Modifier.padding(horizontal = 32.dp),
+        modifier = Modifier.padding(horizontal = 16.dp),
         text = stringResource(R.string.main_screen_explanation),
         style = MaterialTheme.typography.titleMedium
     )
-    Spacer(modifier = Modifier.height(32.dp))
-    TextField(
+    Spacer(modifier = Modifier.height(16.dp))
+    MainScreenTextField(
         modifier = Modifier
-            .padding(horizontal = 32.dp)
+            .padding(horizontal = 16.dp)
             .fillMaxWidth(),
-        value = state.requiredPointNumber,
-        onValueChange = onPointNumberChanged,
-        prefix = { Text(text = "Request: ") },
-        suffix = { Text(text = "points") },
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-        isError = state.isInputError,
-        supportingText = { Text(text = getErrorString(state.errorTypeViewData)) }
+        state = state,
+        onPointNumberChanged = onPointNumberChanged
     )
-
-    AnimatedContent(
-        targetState = state.isError,
+    MainScreenErrorSection(
         modifier = Modifier.fillMaxWidth(),
-    ) {
-        if (it) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                content = {
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Text(
-                        modifier = Modifier.padding(horizontal = 24.dp),
-                        text = stringResource(R.string.main_screen_error_occurred),
-                        style = MaterialTheme.typography.titleMedium,
-                        textAlign = TextAlign.Center
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(text = stringResource(R.string.main_screen_try_again))
-                    Spacer(modifier = Modifier.height(8.dp))
-                    BounceArrowIcon()
-                    Spacer(modifier = Modifier.height(16.dp))
-                }
-            )
-        }
-    }
-    Button(
+        state = state
+    )
+    MainScreenGoButton(
         modifier = Modifier
-            .padding(horizontal = 32.dp)
+            .padding(horizontal = 16.dp)
             .fillMaxWidth(),
+        state = state,
         onClick = onRequestClicked,
+    )
+}
+
+@Composable
+private fun MainScreenContentLandscape(
+    state: MainScreenState,
+    onPointNumberChanged: (String) -> Unit,
+    onRequestClicked: () -> Unit,
+    onBatchClicked: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier
+            .displayCutoutPadding()
+            .fillMaxSize(),
         content = {
-            if (state.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(24.dp),
-                    color = MaterialTheme.colorScheme.onSecondary,
-                    strokeWidth = 2.dp,
-                )
-            } else {
-                Text(
-                    text = stringResource(
-                        if (state.isError) {
-                            R.string.main_screen_button_go_again
-                        } else {
-                            R.string.main_screen_button_go
-                        }
-                    )
-                )
-            }
+            MainContentLandscapeLeft(
+                modifier = Modifier.weight(0.5f),
+                state = state,
+                onBatchClicked = onBatchClicked
+            )
+            MainContentLandscapeRight(
+                modifier = Modifier.weight(0.5f),
+                state = state,
+                onPointNumberChanged = onPointNumberChanged,
+                onRequestClicked = onRequestClicked
+            )
         }
     )
 }
 
 @Composable
-private fun getErrorString(errorTypeViewData: MainScreenErrorTypeViewData): String {
-    val id = when (errorTypeViewData) {
-        MainScreenErrorTypeViewData.None -> return ""
-        MainScreenErrorTypeViewData.EmptyNumber -> R.string.main_screen_error_empty_points_number
-        MainScreenErrorTypeViewData.NegativeNumber -> R.string.main_screen_error_positive_points_number
-        MainScreenErrorTypeViewData.RequestError -> R.string.main_screen_error_something_happened_during_request
-        MainScreenErrorTypeViewData.RequestedIncorrectnessError -> R.string.main_screen_error_server_incorrect_points
-        MainScreenErrorTypeViewData.Unspecified -> R.string.main_screen_error_general
+private fun MainContentLandscapeLeft(
+    state: MainScreenState,
+    onBatchClicked: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier
+    ) {
+        Text(
+            modifier = Modifier.padding(horizontal = 16.dp),
+            text = stringResource(R.string.main_screen_explanation),
+            style = MaterialTheme.typography.titleMedium
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        if (state.batches.isNotEmpty()) {
+            MainScreenBatchList(
+                batches = state.batches,
+                onBatchClicked = onBatchClicked
+            )
+        }
     }
-    return stringResource(id)
+}
+
+@Composable
+private fun MainContentLandscapeRight(
+    state: MainScreenState,
+    onPointNumberChanged: (String) -> Unit,
+    onRequestClicked: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(modifier = modifier) {
+        MainScreenTextField(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth(),
+            state = state,
+            onPointNumberChanged = onPointNumberChanged
+        )
+        MainScreenErrorSection(
+            modifier = Modifier.fillMaxWidth(),
+            state = state
+        )
+        MainScreenGoButton(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth(),
+            state = state,
+            onClick = onRequestClicked,
+        )
+    }
 }
