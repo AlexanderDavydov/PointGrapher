@@ -11,7 +11,6 @@ import com.example.pointgrapher.domain.usecase.RequestPointsBatchUseCase
 import com.example.pointgrapher.presentation.screen.main.viewdata.BatchInfoViewData
 import com.example.pointgrapher.presentation.screen.main.viewdata.MainScreenErrorTypeViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
