@@ -50,7 +50,7 @@ internal fun MainScreen(
                     state = state,
                     modifier = Modifier.padding(paddingValues),
                     onPointNumberChanged = viewModel::onPointNumberChanged,
-                    onRequestClicked = viewModel::request,
+                    onRequestClicked = viewModel::requestPoints,
                     onBatchClicked = viewModel::onBatchClicked,
                     onBatchDeleted = viewModel::onBatchDeleted,
                 )
@@ -59,7 +59,7 @@ internal fun MainScreen(
                     state = state,
                     modifier = Modifier.padding(paddingValues),
                     onPointNumberChanged = viewModel::onPointNumberChanged,
-                    onRequestClicked = viewModel::request,
+                    onRequestClicked = viewModel::requestPoints,
                     onBatchClicked = viewModel::onBatchClicked,
                     onBatchDeleted = viewModel::onBatchDeleted,
                 )

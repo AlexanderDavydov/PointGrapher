@@ -1,6 +1,5 @@
 package com.example.pointgrapher.presentation.screen.main
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pointgrapher.domain.exception.BatchNotFoundException
@@ -12,6 +11,7 @@ import com.example.pointgrapher.domain.usecase.RequestPointsBatchUseCase
 import com.example.pointgrapher.presentation.screen.main.viewdata.BatchInfoViewData
 import com.example.pointgrapher.presentation.screen.main.viewdata.MainScreenErrorTypeViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,7 +58,7 @@ class MainViewModel @Inject constructor(
         _state.update { it.copy(requiredPointNumber = stateValue) }
     }
 
-    fun request() {
+    fun requestPoints() {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             try {
