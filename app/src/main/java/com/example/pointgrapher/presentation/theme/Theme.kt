@@ -26,7 +26,6 @@ fun PointGrapherTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
         content = content
     )
 }

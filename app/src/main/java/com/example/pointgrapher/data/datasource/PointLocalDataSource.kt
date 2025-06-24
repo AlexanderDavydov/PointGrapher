@@ -36,6 +36,13 @@ class PointLocalDataSource @Inject constructor(
         pointDao.insertPoints(pointEntities)
     }
 
+    /**
+     * Retrieves a batch of points from the local data source.
+     *
+     * @param batchId The ID of the batch.
+     * @return The list of points in the batch.
+     * @throws BatchNotFoundException if the batch is not found.
+     */
     suspend fun getBatch(batchId: String): List<PointDto> {
         batchDao.getBatchById(batchId) ?: throw BatchNotFoundException(batchId)
 
@@ -46,6 +53,11 @@ class PointLocalDataSource @Inject constructor(
         }
     }
 
+    /**
+     * Observes all batches in the local data source.
+     *
+     * @return A flow of lists of batch DTOs.
+     */
     fun observeAllBatches(): Flow<List<BatchDto>> {
         return batchDao.observeAllBatches().map { entitys ->
             entitys.map { entity ->
@@ -58,6 +70,12 @@ class PointLocalDataSource @Inject constructor(
         }
     }
 
+    /**
+     * Deletes a batch from the local data source.
+     *
+     * @param batchId The ID of the batch to delete.
+     * @throws BatchNotFoundException if the batch is not found.
+     */
     suspend fun deleteBatch(batchId: String) {
         batchDao.getBatchById(batchId) ?: throw BatchNotFoundException(batchId)
 
