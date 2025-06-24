@@ -13,8 +13,8 @@ import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 
 class PointLocalDataSourceTest {
 
@@ -22,7 +22,7 @@ class PointLocalDataSourceTest {
     private val pointDao = mockk<PointDao>()
     private lateinit var dataSource: PointLocalDataSource
 
-    @Before
+    @BeforeEach
     fun setUp() {
         dataSource = PointLocalDataSource(batchDao, pointDao)
     }

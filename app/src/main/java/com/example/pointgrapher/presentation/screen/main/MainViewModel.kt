@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.Date
 import javax.inject.Inject
 
@@ -61,8 +62,8 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             try {
-                val pointNumber = doPreRequestChecks(state.value.requiredPointNumber)
-                val batchId = requestPointsBatchUseCase(pointNumber)
+                val pointsNumber = doPreRequestChecks(state.value.requiredPointNumber)
+                val batchId = requestPointsBatchUseCase(pointsNumber)
                 _state.update {
                     it.copy(
                         isLoading = false,
@@ -80,7 +81,7 @@ class MainViewModel @Inject constructor(
                 }
 
                 val logMessage = "Error while requesting ${state.value.requiredPointNumber} points"
-                Log.e(MainViewModel::class.java.name, logMessage, e)
+                Timber.e(e, logMessage)
             }
         }
     }
@@ -100,7 +101,7 @@ class MainViewModel @Inject constructor(
                 } else {
                     "Error while deleting batch $batchId"
                 }
-                Log.i(MainViewModel::class.java.name, logMessage)
+                Timber.i(logMessage)
             }
         }
     }

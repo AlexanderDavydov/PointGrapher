@@ -9,7 +9,7 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import okhttp3.ResponseBody.Companion.toResponseBody
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import retrofit2.Response
 
 class PointRemoteDataSourceTest {

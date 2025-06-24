@@ -39,6 +39,13 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+    }
+
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+        }
     }
 }
 
@@ -82,15 +89,14 @@ dependencies {
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
 
+    implementation(libs.timber)
+
     debugImplementation(libs.androidx.ui.tooling)
 
     // Testing
-    testImplementation(libs.junit)
+    testImplementation(libs.junit5.api)
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)
     testImplementation(libs.truth)
     testImplementation(libs.coroutines.test)
-
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
 }
