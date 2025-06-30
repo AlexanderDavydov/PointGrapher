@@ -15,7 +15,7 @@
         android:theme="@style/Theme.PointGrapher"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.composeui.MainComposeActivity"
             android:exported="true"
             android:theme="@style/Theme.PointGrapher">
             <intent-filter>
