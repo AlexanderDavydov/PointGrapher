@@ -10,6 +10,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import com.example.pointgrapher.R
 import com.example.pointgrapher.presentation.composeui.screen.main.MainScreenState
 import com.example.pointgrapher.presentation.composeui.screen.main.viewdata.MainScreenErrorTypeViewData
+import com.example.pointgrapher.presentation.composeui.screen.main.viewdata.ValidationErrorTypeViewData
 
 @Composable
 internal fun MainScreenTextField(
@@ -33,11 +34,20 @@ internal fun MainScreenTextField(
 private fun getErrorString(errorTypeViewData: MainScreenErrorTypeViewData): String {
     val id = when (errorTypeViewData) {
         MainScreenErrorTypeViewData.None -> return ""
-        MainScreenErrorTypeViewData.EmptyNumber -> R.string.main_screen_error_empty_points_number
-        MainScreenErrorTypeViewData.NegativeNumber -> R.string.main_screen_error_positive_points_number
+        is MainScreenErrorTypeViewData.ValidationError -> getValidationErrorString(errorTypeViewData.type)
         MainScreenErrorTypeViewData.RequestError -> R.string.main_screen_error_something_happened_during_request
         MainScreenErrorTypeViewData.RequestedIncorrectnessError -> R.string.main_screen_error_server_incorrect_points
         MainScreenErrorTypeViewData.Unspecified -> R.string.main_screen_error_general
     }
     return stringResource(id)
+}
+
+private fun getValidationErrorString(type: ValidationErrorTypeViewData): Int {
+    return when (type) {
+        ValidationErrorTypeViewData.Empty -> R.string.main_screen_error_empty_points_number
+        ValidationErrorTypeViewData.InvalidFormat -> R.string.main_screen_error_invalid_format
+        ValidationErrorTypeViewData.MustBeNumber -> R.string.main_screen_error_must_be_number
+        ValidationErrorTypeViewData.TooHighValue -> R.string.main_screen_error_too_high_value
+        ValidationErrorTypeViewData.TooLowValue -> R.string.main_screen_error_too_low_value
+    }
 }

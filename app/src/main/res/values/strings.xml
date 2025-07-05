@@ -10,7 +10,10 @@
     <string name="main_screen_batch_list_title">List of previous batches</string>
     <string name="main_screen_error_occurred">Error occurred while request points</string>
     <string name="main_screen_error_empty_points_number">Request points number can\'t be empty</string>
-    <string name="main_screen_error_positive_points_number">Request points number must be positive</string>
+    <string name="main_screen_error_invalid_format">Invalid format</string>
+    <string name="main_screen_error_must_be_number">Must be a number</string>
+    <string name="main_screen_error_too_high_value">Maximum 1000 points allowed</string>
+    <string name="main_screen_error_too_low_value">Must be at least 1 point</string>
     <string name="main_screen_error_something_happened_during_request">Something happened during request</string>
     <string name="main_screen_error_server_incorrect_points">Server returned incorrect points number error. Value either too big or too small.</string>
     <string name="main_screen_error_general">Something went wrong</string>

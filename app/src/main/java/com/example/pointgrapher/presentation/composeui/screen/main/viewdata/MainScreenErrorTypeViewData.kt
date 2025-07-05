@@ -1,10 +1,9 @@
 package com.example.pointgrapher.presentation.composeui.screen.main.viewdata
 
-enum class MainScreenErrorTypeViewData {
-    None,
-    EmptyNumber,
-    NegativeNumber,
-    RequestedIncorrectnessError,
-    RequestError,
-    Unspecified
+sealed class MainScreenErrorTypeViewData {
+    data object None : MainScreenErrorTypeViewData()
+    data class ValidationError(val type: ValidationErrorTypeViewData) : MainScreenErrorTypeViewData()
+    data object RequestedIncorrectnessError : MainScreenErrorTypeViewData()
+    data object RequestError : MainScreenErrorTypeViewData()
+    data object Unspecified : MainScreenErrorTypeViewData()
 }
