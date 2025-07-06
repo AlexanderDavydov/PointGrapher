@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.composeui.screen.main.viewdata
+package com.example.pointgrapher.presentation.main.viewdata
 
 sealed class MainScreenErrorTypeViewData {
     data object None : MainScreenErrorTypeViewData()

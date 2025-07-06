@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.composeui.screen.result.ui
+package com.example.pointgrapher.presentation.result.ui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.pointgrapher.R
-import com.example.pointgrapher.presentation.composeui.screen.result.ResultState
-import com.example.pointgrapher.presentation.composeui.screen.result.ResultViewModel
+import com.example.pointgrapher.presentation.result.ResultState
+import com.example.pointgrapher.presentation.result.ResultViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

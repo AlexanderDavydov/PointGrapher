@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.xmlui.onboarding
+package com.example.pointgrapher.presentation.onboarding
 
 enum class OnboardingNavigation {
     ComposeScreen, XmlScreen

@@ -5,8 +5,8 @@ import com.example.pointgrapher.TestDataFactory
 import com.example.pointgrapher.domain.exception.BatchNotFoundException
 import com.example.pointgrapher.domain.model.PointBatch
 import com.example.pointgrapher.domain.usecase.GetPointsBatchUseCase
-import com.example.pointgrapher.presentation.composeui.screen.result.ResultState
-import com.example.pointgrapher.presentation.composeui.screen.result.ResultViewModel
+import com.example.pointgrapher.presentation.result.ResultState
+import com.example.pointgrapher.presentation.result.ResultViewModel
 import com.example.pointgrapher.util.UnconfinedCoroutinesExtension
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery

@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.composeui.screen.main
+package com.example.pointgrapher.presentation.main
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -12,10 +12,10 @@ import com.example.pointgrapher.domain.usecase.DeletePointBatchUseCase
 import com.example.pointgrapher.domain.usecase.ObserveBatchesUseCase
 import com.example.pointgrapher.domain.usecase.RequestPointsBatchUseCase
 import com.example.pointgrapher.domain.usecase.ValidatePointCountUseCase
-import com.example.pointgrapher.presentation.composeui.screen.main.viewdata.BatchInfoViewData
-import com.example.pointgrapher.presentation.composeui.screen.main.viewdata.MainScreenErrorTypeViewData
-import com.example.pointgrapher.presentation.composeui.screen.main.viewdata.MainScreenErrorTypeViewData.ValidationError
-import com.example.pointgrapher.presentation.composeui.screen.main.viewdata.ValidationErrorTypeViewData
+import com.example.pointgrapher.presentation.main.viewdata.BatchInfoViewData
+import com.example.pointgrapher.presentation.main.viewdata.MainScreenErrorTypeViewData
+import com.example.pointgrapher.presentation.main.viewdata.MainScreenErrorTypeViewData.ValidationError
+import com.example.pointgrapher.presentation.main.viewdata.ValidationErrorTypeViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow

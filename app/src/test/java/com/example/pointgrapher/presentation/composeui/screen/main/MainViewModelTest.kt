@@ -6,8 +6,8 @@ import com.example.pointgrapher.domain.exception.NetworkError
 import com.example.pointgrapher.domain.usecase.DeletePointBatchUseCase
 import com.example.pointgrapher.domain.usecase.ObserveBatchesUseCase
 import com.example.pointgrapher.domain.usecase.RequestPointsBatchUseCase
-import com.example.pointgrapher.presentation.composeui.screen.main.MainViewModel
-import com.example.pointgrapher.presentation.composeui.screen.main.viewdata.MainScreenErrorTypeViewData
+import com.example.pointgrapher.presentation.main.MainViewModel
+import com.example.pointgrapher.presentation.main.viewdata.MainScreenErrorTypeViewData
 import com.example.pointgrapher.util.UnconfinedCoroutinesExtension
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery

@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.composeui.screen.result.ui
+package com.example.pointgrapher.presentation.result.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -17,7 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.pointgrapher.presentation.composeui.screen.result.model.PointViewData
+import com.example.pointgrapher.presentation.result.model.PointViewData
 
 @Composable
 internal fun ResultScrollableTable(

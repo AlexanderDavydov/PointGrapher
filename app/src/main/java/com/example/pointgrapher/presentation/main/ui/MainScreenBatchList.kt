@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.composeui.screen.main.ui
+package com.example.pointgrapher.presentation.main.ui
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
@@ -32,7 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.example.pointgrapher.R
-import com.example.pointgrapher.presentation.composeui.screen.main.viewdata.BatchInfoViewData
+import com.example.pointgrapher.presentation.main.viewdata.BatchInfoViewData
 import java.text.SimpleDateFormat
 import java.util.Date
 

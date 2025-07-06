@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.composeui.screen.main.viewdata
+package com.example.pointgrapher.presentation.main.viewdata
 
 import androidx.compose.runtime.Immutable
 import java.util.Date

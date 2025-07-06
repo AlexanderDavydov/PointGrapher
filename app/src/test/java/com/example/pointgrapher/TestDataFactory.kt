@@ -5,7 +5,7 @@ import com.example.pointgrapher.data.model.PointDto
 import com.example.pointgrapher.data.model.PointsResponse
 import com.example.pointgrapher.domain.model.BatchInfo
 import com.example.pointgrapher.domain.model.PointBatch
-import com.example.pointgrapher.presentation.composeui.screen.result.model.PointViewData
+import com.example.pointgrapher.presentation.result.model.PointViewData
 
 object TestDataFactory {
 

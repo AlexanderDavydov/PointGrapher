@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.composeui.screen.result.ui
+package com.example.pointgrapher.presentation.result.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

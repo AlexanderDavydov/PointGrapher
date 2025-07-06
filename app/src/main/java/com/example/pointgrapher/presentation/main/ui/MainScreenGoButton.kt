@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.composeui.screen.main.ui
+package com.example.pointgrapher.presentation.main.ui
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.pointgrapher.R
-import com.example.pointgrapher.presentation.composeui.screen.main.MainScreenState
+import com.example.pointgrapher.presentation.main.MainScreenState
 
 @Composable
 internal fun MainScreenGoButton(

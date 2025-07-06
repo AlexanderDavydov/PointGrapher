@@ -1,10 +1,10 @@
-package com.example.pointgrapher.presentation.composeui.screen.result
+package com.example.pointgrapher.presentation.result
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pointgrapher.domain.model.PointBatch
 import com.example.pointgrapher.domain.usecase.GetPointsBatchUseCase
-import com.example.pointgrapher.presentation.composeui.screen.result.model.PointViewData
+import com.example.pointgrapher.presentation.result.model.PointViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

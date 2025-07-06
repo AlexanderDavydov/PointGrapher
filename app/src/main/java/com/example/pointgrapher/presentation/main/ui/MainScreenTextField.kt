@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.composeui.screen.main.ui
+package com.example.pointgrapher.presentation.main.ui
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.pointgrapher.R
-import com.example.pointgrapher.presentation.composeui.screen.main.MainScreenState
-import com.example.pointgrapher.presentation.composeui.screen.main.viewdata.MainScreenErrorTypeViewData
-import com.example.pointgrapher.presentation.composeui.screen.main.viewdata.ValidationErrorTypeViewData
+import com.example.pointgrapher.presentation.main.MainScreenState
+import com.example.pointgrapher.presentation.main.viewdata.MainScreenErrorTypeViewData
+import com.example.pointgrapher.presentation.main.viewdata.ValidationErrorTypeViewData
 
 @Composable
 internal fun MainScreenTextField(

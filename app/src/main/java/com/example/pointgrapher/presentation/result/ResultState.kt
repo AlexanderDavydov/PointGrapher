@@ -1,6 +1,6 @@
-package com.example.pointgrapher.presentation.composeui.screen.result
+package com.example.pointgrapher.presentation.result
 
-import com.example.pointgrapher.presentation.composeui.screen.result.model.PointViewData
+import com.example.pointgrapher.presentation.result.model.PointViewData
 
 sealed interface ResultState {
     data object Loading : ResultState

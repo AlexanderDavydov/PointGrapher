@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.xmlui.onboarding
+package com.example.pointgrapher.presentation.onboarding
 
 import android.content.Intent
 import android.os.Bundle

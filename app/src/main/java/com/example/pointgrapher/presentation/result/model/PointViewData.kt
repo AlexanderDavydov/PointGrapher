@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.composeui.screen.result.model
+package com.example.pointgrapher.presentation.result.model
 
 data class PointViewData(
     val x: List<Number>,

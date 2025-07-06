@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.composeui.screen.main.ui
+package com.example.pointgrapher.presentation.main.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
@@ -25,8 +25,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.pointgrapher.R
-import com.example.pointgrapher.presentation.composeui.screen.main.MainScreenState
-import com.example.pointgrapher.presentation.composeui.screen.main.MainViewModel
+import com.example.pointgrapher.presentation.main.MainScreenState
+import com.example.pointgrapher.presentation.main.MainViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

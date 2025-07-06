@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.composeui.screen.result.ui
+package com.example.pointgrapher.presentation.result.ui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.example.pointgrapher.presentation.composeui.screen.result.model.PointViewData
+import com.example.pointgrapher.presentation.result.model.PointViewData
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberBottom
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberStart

@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.xmlui.onboarding
+package com.example.pointgrapher.presentation.onboarding
 
 import androidx.lifecycle.ViewModel
 import com.example.pointgrapher.domain.model.UIFramework
