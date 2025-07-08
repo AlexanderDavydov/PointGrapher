@@ -89,6 +89,9 @@ dependencies {
     implementation(libs.vico.compose)
     implementation(libs.vico.compose.m3)
 
+    // MPAndroid Chart
+    implementation(libs.mpandroidchart)
+
     // Room
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
