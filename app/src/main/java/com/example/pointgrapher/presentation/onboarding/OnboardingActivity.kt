@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.pointgrapher.databinding.ActivityOnboardingBinding
 import com.example.pointgrapher.presentation.composeui.MainComposeActivity
+import com.example.pointgrapher.presentation.main.xmlbased.MainActivityXml
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -49,7 +50,7 @@ class OnboardingActivity : AppCompatActivity() {
     private fun navigateToMainScreen(navigation: OnboardingNavigation) {
         val intent = when (navigation) {
             OnboardingNavigation.ComposeScreen -> Intent(this, MainComposeActivity::class.java)
-            OnboardingNavigation.XmlScreen -> TODO() // Intent(this, MainXMLActivity::class.java)
+            OnboardingNavigation.XmlScreen -> Intent(this, MainActivityXml::class.java)
         }
 
         startActivity(intent)
