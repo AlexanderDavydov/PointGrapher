@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.result.ui
+package com.example.pointgrapher.presentation.result.composeui
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons

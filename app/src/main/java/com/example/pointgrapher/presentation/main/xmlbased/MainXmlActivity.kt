@@ -1,5 +1,6 @@
 package com.example.pointgrapher.presentation.main.xmlbased
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -19,6 +20,7 @@ import com.example.pointgrapher.presentation.main.MainViewModel
 import com.example.pointgrapher.presentation.main.viewdata.BatchInfoViewData
 import com.example.pointgrapher.presentation.main.viewdata.MainScreenErrorTypeViewData
 import com.example.pointgrapher.presentation.main.viewdata.ValidationErrorTypeViewData
+import com.example.pointgrapher.presentation.result.xmlbased.ResultActivityXml
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -36,7 +38,7 @@ class MainActivityXml : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityMainXmlBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -164,6 +166,9 @@ class MainActivityXml : AppCompatActivity() {
     }
 
     private fun navigateToResult(batchId: String) {
-        // todo navigate to result
+        val intent = Intent(this, ResultActivityXml::class.java).apply {
+            putExtra(ResultActivityXml.EXTRA_BATCH_ID, batchId)
+        }
+        startActivity(intent)
     }
 }

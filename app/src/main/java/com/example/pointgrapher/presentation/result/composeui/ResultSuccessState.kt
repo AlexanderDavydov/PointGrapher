@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.result.ui
+package com.example.pointgrapher.presentation.result.composeui
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column

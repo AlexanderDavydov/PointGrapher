@@ -28,12 +28,13 @@
             android:name=".presentation.composeui.MainComposeActivity"
             android:exported="true"
             android:theme="@style/Theme.PointGrapher" />
-
         <activity
             android:name=".presentation.main.xmlbased.MainActivityXml"
             android:exported="false"
             android:theme="@style/Theme.PointGrapher" />
-
+        <activity
+            android:name=".presentation.result.xmlbased.ResultActivityXml"
+            android:exported="false"
+            android:theme="@style/Theme.PointGrapher" />
     </application>
-
 </manifest>
