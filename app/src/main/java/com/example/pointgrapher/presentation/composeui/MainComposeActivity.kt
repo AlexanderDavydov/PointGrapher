@@ -8,7 +8,7 @@ import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import com.example.pointgrapher.presentation.main.ui.MainScreen
+import com.example.pointgrapher.presentation.main.composebased.MainScreen
 import com.example.pointgrapher.presentation.result.ui.ResultScreen
 import com.example.pointgrapher.presentation.composeui.theme.PointGrapherTheme
 import dagger.hilt.android.AndroidEntryPoint

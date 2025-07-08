@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.main.ui
+package com.example.pointgrapher.presentation.main.composebased
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button

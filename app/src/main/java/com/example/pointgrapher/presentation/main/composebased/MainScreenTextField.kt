@@ -1,4 +1,4 @@
-package com.example.pointgrapher.presentation.main.ui
+package com.example.pointgrapher.presentation.main.composebased
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
