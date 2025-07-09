@@ -1,23 +1,36 @@
 package com.example.pointgrapher.presentation.result
 
+import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pointgrapher.domain.model.PointBatch
 import com.example.pointgrapher.domain.usecase.GetPointsBatchUseCase
+import com.example.pointgrapher.domain.usecase.SaveChartImageUseCase
 import com.example.pointgrapher.presentation.result.model.PointViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ResultViewModel @Inject constructor(
-    private val getPointsBatchUseCase: GetPointsBatchUseCase
+    private val getPointsBatchUseCase: GetPointsBatchUseCase,
+    private val saveChartImageUseCase: SaveChartImageUseCase
 ) : ViewModel() {
 
     private val _state = MutableStateFlow<ResultState>(ResultState.Loading)
     val state = _state.asStateFlow()
+
+    private val _notification = MutableSharedFlow<ResultUINotification>(
+        replay = 0,
+        extraBufferCapacity = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val notification = _notification.asSharedFlow()
 
     fun onBatchIdChanged(batchId: String) {
         _state.value = ResultState.Loading
@@ -27,6 +40,17 @@ class ResultViewModel @Inject constructor(
                 _state.value = ResultState.Success(points.mapToViewData())
             } catch (e: Exception) {
                 _state.value = ResultState.Error
+            }
+        }
+    }
+
+    fun saveChartImage(bitmap: Bitmap) {
+        viewModelScope.launch {
+            try {
+                val savedPath = saveChartImageUseCase(bitmap, "xml_chart")
+                _notification.emit(ResultUINotification.ChartSaved(savedPath))
+            } catch (e: Exception) {
+                _notification.emit(ResultUINotification.Error("Failed to save chart: ${e.message}"))
             }
         }
     }

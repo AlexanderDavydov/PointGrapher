@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pointgrapher.R
 import com.example.pointgrapher.databinding.ActivityResultXmlBinding
 import com.example.pointgrapher.presentation.result.ResultState
+import com.example.pointgrapher.presentation.result.ResultUINotification
 import com.example.pointgrapher.presentation.result.ResultViewModel
 import com.example.pointgrapher.presentation.result.model.PointViewData
 import com.google.android.material.snackbar.Snackbar
@@ -62,19 +63,10 @@ class ResultActivityXml : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_save_chart -> {
-                saveChart()
-                true
-            }
-
-            android.R.id.home -> {
-                onBackPressedDispatcher.onBackPressed()
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
+        return if (item.itemId == R.id.action_save_chart) {
+            saveChart()
+            true
+        } else super.onOptionsItemSelected(item)
     }
 
     private fun setupViews() {
@@ -97,8 +89,25 @@ class ResultActivityXml : AppCompatActivity() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect { state ->
-                    updateUI(state)
+                // Observe state
+                launch {
+                    viewModel.state.collect { state ->
+                        updateUI(state)
+                    }
+                }
+
+                // Observe UI effects (добавляем новый блок)
+                launch {
+                    viewModel.notification.collect { notification ->
+                        val message = when (notification) {
+                            is ResultUINotification.ChartSaved -> "Chart Saved to ${notification.path}"
+                            is ResultUINotification.Error -> notification.message
+                        }
+
+                        Snackbar
+                            .make(binding.root, message, Snackbar.LENGTH_LONG)
+                            .show()
+                    }
                 }
             }
         }
@@ -106,47 +115,43 @@ class ResultActivityXml : AppCompatActivity() {
 
     private fun updateUI(state: ResultState) {
         when (state) {
-            is ResultState.Loading -> {
-                showLoading()
-            }
-
-            is ResultState.Success -> {
-                hideLoading()
-                showData(state.points)
-            }
-
-            is ResultState.Error -> {
-                hideLoading()
-                showError("Failed to load points")
-            }
+            is ResultState.Loading -> showLoading()
+            is ResultState.Success -> showData(state.points)
+            is ResultState.Error -> showError("Failed to load points")
         }
     }
 
     private fun showLoading() {
-        binding.lineChart.clear()
-        pointsAdapter.submitList(emptyList())
+        binding.loadingContainer.visibility = android.view.View.VISIBLE
+        binding.contentContainer.visibility = android.view.View.GONE
+        binding.errorContainer.visibility = android.view.View.GONE
     }
 
     private fun hideLoading() {
-        // Скрываем индикаторы загрузки
+        binding.loadingContainer.visibility = android.view.View.GONE
     }
 
     private fun showData(points: PointViewData) {
+        hideLoading()
+        binding.contentContainer.visibility = android.view.View.VISIBLE
+
         graphManager.updateData(binding.lineChart, points)
+
         pointsAdapter.updatePoints(points)
     }
 
     private fun showError(message: String) {
+        hideLoading()
+        binding.contentContainer.visibility = android.view.View.GONE
+        binding.errorContainer.visibility = android.view.View.VISIBLE
+
         Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG).show()
     }
 
     private fun saveChart() {
         val bitmap = graphManager.getChartBitmap(binding.lineChart)
         if (bitmap != null) {
-            // TODO: Интегрируем SaveChartImageUseCase
-            // Пока просто показываем сообщение
-            Snackbar.make(binding.root, "Chart save feature coming soon!", Snackbar.LENGTH_SHORT)
-                .show()
+            viewModel.saveChartImage(bitmap)
         } else {
             showError("Failed to capture chart")
         }

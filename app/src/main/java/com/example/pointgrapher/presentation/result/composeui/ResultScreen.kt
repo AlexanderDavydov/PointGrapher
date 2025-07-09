@@ -14,6 +14,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.pointgrapher.R
@@ -33,6 +34,18 @@ internal fun ResultScreen(
         viewModel.onBatchIdChanged(batchId)
     }
 
+    // Обработка UI эффектов
+    LaunchedEffect(Unit) {
+        viewModel.notification.collect { effect ->
+            when (effect) {
+                is ResultViewModel.UiEffect.ShowMessage -> {
+                    // Показываем Toast или Snackbar
+                    Toast.makeText(context, effect.message, Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -44,6 +57,21 @@ internal fun ResultScreen(
                             Icon(
                                 imageVector = Icons.AutoMirrored.Default.ArrowBack,
                                 contentDescription = "Go Back"
+                            )
+                        }
+                    )
+                },
+                actions = {
+                    IconButton(
+                        onClick = {
+
+                        // viewModel.saveChartImage(bitmap = bitmap, chartType = "compose_chart")
+
+                        },
+                        content = {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_save),
+                                contentDescription = "Save Chart"
                             )
                         }
                     )

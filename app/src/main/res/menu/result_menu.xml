@@ -6,6 +6,6 @@
         android:id="@+id/action_save_chart"
         android:title="Save Chart"
         android:icon="@drawable/ic_save"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
 </menu>
