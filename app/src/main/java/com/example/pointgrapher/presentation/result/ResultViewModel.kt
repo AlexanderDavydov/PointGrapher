@@ -44,10 +44,10 @@ class ResultViewModel @Inject constructor(
         }
     }
 
-    fun saveChartImage(bitmap: Bitmap) {
+    fun saveChartImage(bitmap: Bitmap, chartType: String) {
         viewModelScope.launch {
             try {
-                val savedPath = saveChartImageUseCase(bitmap, "xml_chart")
+                val savedPath = saveChartImageUseCase(bitmap, chartType)
                 _notification.emit(ResultUINotification.ChartSaved(savedPath))
             } catch (e: Exception) {
                 _notification.emit(ResultUINotification.Error("Failed to save chart: ${e.message}"))

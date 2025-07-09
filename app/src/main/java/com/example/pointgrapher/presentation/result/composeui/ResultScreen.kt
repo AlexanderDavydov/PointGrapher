@@ -8,17 +8,21 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.pointgrapher.R
 import com.example.pointgrapher.presentation.result.ResultState
+import com.example.pointgrapher.presentation.result.ResultUINotification
 import com.example.pointgrapher.presentation.result.ResultViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,20 +33,19 @@ internal fun ResultScreen(
     viewModel: ResultViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(batchId) {
         viewModel.onBatchIdChanged(batchId)
     }
 
-    // Обработка UI эффектов
     LaunchedEffect(Unit) {
-        viewModel.notification.collect { effect ->
-            when (effect) {
-                is ResultViewModel.UiEffect.ShowMessage -> {
-                    // Показываем Toast или Snackbar
-                    Toast.makeText(context, effect.message, Toast.LENGTH_LONG).show()
-                }
+        viewModel.notification.collect { notification ->
+            val message = when (notification) {
+                is ResultUINotification.ChartSaved -> "Chart Saved to ${notification.path}"
+                is ResultUINotification.Error -> notification.message
             }
+            snackbarHostState.showSnackbar(message)
         }
     }
 
@@ -65,7 +68,7 @@ internal fun ResultScreen(
                     IconButton(
                         onClick = {
 
-                        // viewModel.saveChartImage(bitmap = bitmap, chartType = "compose_chart")
+                            // todo viewModel.saveChartImage(bitmap = bitmap, chartType = "compose_chart")
 
                         },
                         content = {
@@ -77,6 +80,9 @@ internal fun ResultScreen(
                     )
                 }
             )
+        },
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
         },
         content = {
             ResultScreenState(

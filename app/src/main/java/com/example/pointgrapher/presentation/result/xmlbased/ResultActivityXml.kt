@@ -89,14 +89,12 @@ class ResultActivityXml : AppCompatActivity() {
     private fun observeViewModel() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                // Observe state
                 launch {
                     viewModel.state.collect { state ->
                         updateUI(state)
                     }
                 }
 
-                // Observe UI effects (добавляем новый блок)
                 launch {
                     viewModel.notification.collect { notification ->
                         val message = when (notification) {
@@ -151,7 +149,7 @@ class ResultActivityXml : AppCompatActivity() {
     private fun saveChart() {
         val bitmap = graphManager.getChartBitmap(binding.lineChart)
         if (bitmap != null) {
-            viewModel.saveChartImage(bitmap)
+            viewModel.saveChartImage(bitmap = bitmap, chartType = "xml_chart")
         } else {
             showError("Failed to capture chart")
         }
