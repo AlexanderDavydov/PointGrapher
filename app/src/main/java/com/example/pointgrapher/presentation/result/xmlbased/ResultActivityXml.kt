@@ -36,14 +36,8 @@ class ResultActivityXml : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityResultXmlBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         setupViews()
         observeViewModel()
@@ -84,7 +78,7 @@ class ResultActivityXml : AppCompatActivity() {
     }
 
     private fun setupActionBar() {
-        supportActionBar?.title = getString(R.string.result_screen_title)
+        setSupportActionBar(binding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

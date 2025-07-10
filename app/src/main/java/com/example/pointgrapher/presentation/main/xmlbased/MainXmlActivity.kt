@@ -32,21 +32,13 @@ import kotlinx.coroutines.launch
 class MainActivityXml : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainXmlBinding
-
     private val viewModel: MainViewModel by viewModels()
-
     private lateinit var batchAdapter: BatchListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityMainXmlBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
 
         setupViews()
         observeViewModel()
@@ -63,15 +55,19 @@ class MainActivityXml : AppCompatActivity() {
                 viewModel.onOpenOnboarding()
                 true
             }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     private fun setupViews() {
+        setupAppBar()
         setupTextInput()
         setupButton()
         setupRecyclerView()
+    }
+
+    private fun setupAppBar() {
+        setSupportActionBar(binding.toolbar)
     }
 
     private fun setupTextInput() {
