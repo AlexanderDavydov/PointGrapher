@@ -50,9 +50,13 @@ class ResultViewModel @Inject constructor(
                 val savedPath = saveChartImageUseCase(bitmap, chartType)
                 _notification.emit(ResultUINotification.ChartSaved(savedPath))
             } catch (e: Exception) {
-                _notification.emit(ResultUINotification.Error("Failed to save chart: ${e.message}"))
+                onSaveChartError(e)
             }
         }
+    }
+
+     fun onSaveChartError(e: Exception) {
+        _notification.tryEmit(ResultUINotification.Error("Failed to save chart: ${e.message}"))
     }
 
     private fun PointBatch.mapToViewData(): PointViewData {

@@ -8,13 +8,16 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -34,6 +37,7 @@ internal fun ResultScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
+    val captureState = remember { mutableStateOf(false) }
 
     LaunchedEffect(batchId) {
         viewModel.onBatchIdChanged(batchId)
@@ -41,11 +45,17 @@ internal fun ResultScreen(
 
     LaunchedEffect(Unit) {
         viewModel.notification.collect { notification ->
-            val message = when (notification) {
-                is ResultUINotification.ChartSaved -> "Chart Saved to ${notification.path}"
-                is ResultUINotification.Error -> notification.message
-            }
-            snackbarHostState.showSnackbar(message)
+            snackbarHostState.showSnackbar(
+                message = when (notification) {
+                    is ResultUINotification.ChartSaved -> "Chart Saved to ${notification.path}"
+                    is ResultUINotification.Error -> notification.message
+                },
+                withDismissAction = notification is ResultUINotification.Error,
+                duration = when (notification) {
+                    is ResultUINotification.ChartSaved -> SnackbarDuration.Long
+                    is ResultUINotification.Error -> SnackbarDuration.Indefinite
+                }
+            )
         }
     }
 
@@ -67,9 +77,7 @@ internal fun ResultScreen(
                 actions = {
                     IconButton(
                         onClick = {
-
-                            // todo viewModel.saveChartImage(bitmap = bitmap, chartType = "compose_chart")
-
+                            captureState.value = true
                         },
                         content = {
                             Icon(
@@ -87,7 +95,18 @@ internal fun ResultScreen(
         content = {
             ResultScreenState(
                 state = state,
-                modifier = Modifier.padding(it)
+                modifier = Modifier.padding(it),
+                captureState = captureState,
+                onChartCapture = {
+                    captureState.value = false
+                    when (it) {
+                        is ResultCaptureChartEvent.Error -> viewModel.onSaveChartError(it.e)
+                        is ResultCaptureChartEvent.Success -> viewModel.saveChartImage(
+                            bitmap = it.bitmap,
+                            chartType = "compose_chart"
+                        )
+                    }
+                }
             )
         }
     )
@@ -96,12 +115,16 @@ internal fun ResultScreen(
 @Composable
 private fun ResultScreenState(
     state: ResultState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    captureState: MutableState<Boolean>,
+    onChartCapture: (ResultCaptureChartEvent) -> Unit,
 ) {
     when (state) {
         is ResultState.Success -> ResultSuccessState(
             modifier = modifier,
-            points = state.points
+            points = state.points,
+            captureState = captureState,
+            onChartCapture = onChartCapture
         )
 
         is ResultState.Loading -> ResultLoadingState(modifier = modifier)
