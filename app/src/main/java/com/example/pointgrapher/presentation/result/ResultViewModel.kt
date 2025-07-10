@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -40,6 +41,7 @@ class ResultViewModel @Inject constructor(
                 _state.value = ResultState.Success(points.mapToViewData())
             } catch (e: Exception) {
                 _state.value = ResultState.Error
+                Timber.e(e)
             }
         }
     }
