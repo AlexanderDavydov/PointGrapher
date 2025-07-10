@@ -8,6 +8,7 @@ import com.example.pointgrapher.domain.exception.NetworkError
 import com.example.pointgrapher.domain.model.BatchInfo
 import com.example.pointgrapher.domain.model.ValidationResult
 import com.example.pointgrapher.domain.model.ValidationResult.Failure
+import com.example.pointgrapher.domain.usecase.ClearUIFrameworkUseCase
 import com.example.pointgrapher.domain.usecase.DeletePointBatchUseCase
 import com.example.pointgrapher.domain.usecase.ObserveBatchesUseCase
 import com.example.pointgrapher.domain.usecase.RequestPointsBatchUseCase
@@ -30,11 +31,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val requestPointsBatchUseCase: RequestPointsBatchUseCase,
+    private val clearUIFrameworkUseCase: ClearUIFrameworkUseCase,
     private val deletePointBatchUseCase: DeletePointBatchUseCase,
+    private val requestPointsBatchUseCase: RequestPointsBatchUseCase,
     private val validatePointCountUseCase: ValidatePointCountUseCase,
+    private val savedStateHandle: SavedStateHandle,
     observeBatchesUseCase: ObserveBatchesUseCase,
-    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private var savedInputText: String
@@ -89,7 +91,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun onBatchClicked(batchId: String) {
-        _navigation.tryEmit(MainScreenNavigation(batchId))
+        _navigation.tryEmit(MainScreenNavigation.GoToResult(batchId))
     }
 
     fun onBatchDeleted(batchId: String) {
@@ -118,7 +120,7 @@ class MainViewModel @Inject constructor(
                         errorTypeViewData = MainScreenErrorTypeViewData.None
                     )
                 }
-                _navigation.tryEmit(MainScreenNavigation(batchId))
+                _navigation.tryEmit(MainScreenNavigation.GoToResult(batchId))
             } catch (e: Exception) {
                 val errorTypeViewData = extractErrorTypeViewData(e)
                 _state.update {
@@ -167,6 +169,11 @@ class MainViewModel @Inject constructor(
 
     private fun List<BatchInfo>.toViewData(): List<BatchInfoViewData> =
         map { BatchInfoViewData(it.id, it.numberOfPoints, Date(it.timestamp)) }
+
+    fun onOpenOnboarding() {
+        clearUIFrameworkUseCase()
+        _navigation.tryEmit(MainScreenNavigation.GoToOnboarding)
+    }
 }
 
 private const val initialPointsValue = "10"

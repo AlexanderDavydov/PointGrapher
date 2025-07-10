@@ -62,7 +62,7 @@ internal fun ResultScreen(
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(stringResource(R.string.result_screen_title)) },
+                title = { Text("${stringResource(R.string.result_screen_title)} (Compose)") },
                 navigationIcon = {
                     IconButton(
                         onClick = onBack,

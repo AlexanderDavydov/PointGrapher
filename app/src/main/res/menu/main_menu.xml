@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_save_chart"
-        android:icon="@drawable/ic_save"
-        android:title="Save Chart"
+        android:id="@+id/action_switch_ui"
+        android:icon="@drawable/ic_switch"
+        android:title="Change UI Type"
         app:showAsAction="always" />
 
 </menu>

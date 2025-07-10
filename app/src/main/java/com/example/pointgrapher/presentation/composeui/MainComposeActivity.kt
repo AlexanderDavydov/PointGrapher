@@ -1,5 +1,6 @@
 package com.example.pointgrapher.presentation.composeui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -8,9 +9,10 @@ import androidx.navigation3.runtime.entry
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
-import com.example.pointgrapher.presentation.main.composebased.MainScreen
-import com.example.pointgrapher.presentation.result.composeui.ResultScreen
 import com.example.pointgrapher.presentation.composeui.theme.PointGrapherTheme
+import com.example.pointgrapher.presentation.main.composebased.MainScreen
+import com.example.pointgrapher.presentation.onboarding.OnboardingActivity
+import com.example.pointgrapher.presentation.result.composeui.ResultScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,6 +31,9 @@ class MainComposeActivity : ComponentActivity() {
                             MainScreen(
                                 onOpenResultScreen = { batchId ->
                                     backStack.add(NavScreen.Result(batchId))
+                                },
+                                onGoToOnboarding = {
+                                    navigateToOnboarding()
                                 }
                             )
                         }
@@ -42,5 +47,17 @@ class MainComposeActivity : ComponentActivity() {
                 )
             }
         }
+    }
+
+    private fun navigateToOnboarding() {
+        val onboardingIntent =
+            Intent(
+                this@MainComposeActivity,
+                OnboardingActivity::class.java
+            ).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+        startActivity(onboardingIntent)
+        finish()
     }
 }

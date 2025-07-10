@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -15,11 +17,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pointgrapher.R
 import com.example.pointgrapher.databinding.ActivityMainXmlBinding
+import com.example.pointgrapher.presentation.main.MainScreenNavigation
 import com.example.pointgrapher.presentation.main.MainScreenState
 import com.example.pointgrapher.presentation.main.MainViewModel
 import com.example.pointgrapher.presentation.main.viewdata.BatchInfoViewData
 import com.example.pointgrapher.presentation.main.viewdata.MainScreenErrorTypeViewData
 import com.example.pointgrapher.presentation.main.viewdata.ValidationErrorTypeViewData
+import com.example.pointgrapher.presentation.onboarding.OnboardingActivity
 import com.example.pointgrapher.presentation.result.xmlbased.ResultActivityXml
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -46,6 +50,22 @@ class MainActivityXml : AppCompatActivity() {
 
         setupViews()
         observeViewModel()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_switch_ui -> {
+                viewModel.onOpenOnboarding()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setupViews() {
@@ -102,7 +122,10 @@ class MainActivityXml : AppCompatActivity() {
 
                 launch {
                     viewModel.navigation.collect { navigation ->
-                        navigateToResult(navigation.batchId)
+                        when (navigation) {
+                            is MainScreenNavigation.GoToResult -> navigateToResult(navigation.batchId)
+                            is MainScreenNavigation.GoToOnboarding -> navigateToOnboarding()
+                        }
                     }
                 }
             }
@@ -170,5 +193,13 @@ class MainActivityXml : AppCompatActivity() {
             putExtra(ResultActivityXml.EXTRA_BATCH_ID, batchId)
         }
         startActivity(intent)
+    }
+
+    private fun navigateToOnboarding() {
+        val intent = Intent(this, OnboardingActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
+        finish()
     }
 }

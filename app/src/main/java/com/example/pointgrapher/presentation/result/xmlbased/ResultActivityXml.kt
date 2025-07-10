@@ -57,21 +57,35 @@ class ResultActivityXml : AppCompatActivity() {
         }
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.result_menu, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == R.id.action_save_chart) {
-            saveChart()
-            true
-        } else super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            R.id.action_save_chart -> {
+                saveChart()
+                true
+            }
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun setupViews() {
+        setupActionBar()
         setupChart()
         setupTable()
+    }
+
+    private fun setupActionBar() {
+        supportActionBar?.title = getString(R.string.result_screen_title)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun setupChart() {

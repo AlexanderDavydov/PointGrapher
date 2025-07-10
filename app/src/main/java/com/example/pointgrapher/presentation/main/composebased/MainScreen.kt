@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -21,10 +23,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.pointgrapher.R
+import com.example.pointgrapher.presentation.main.MainScreenNavigation
 import com.example.pointgrapher.presentation.main.MainScreenState
 import com.example.pointgrapher.presentation.main.MainViewModel
 import kotlinx.coroutines.launch
@@ -33,14 +37,29 @@ import kotlinx.coroutines.launch
 @Composable
 internal fun MainScreen(
     viewModel: MainViewModel = hiltViewModel(),
-    onOpenResultScreen: (String) -> Unit
+    onOpenResultScreen: (String) -> Unit,
+    onGoToOnboarding: () -> Unit,
 ) {
     val state by viewModel.state.collectAsState()
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
-                title = { Text(text = stringResource(R.string.app_name)) }
+                title = {
+                    Text(text = "${stringResource(R.string.app_name)} (Compose)")
+                },
+                actions = {
+                    IconButton(
+                        onClick = {
+                            viewModel.onOpenOnboarding()
+                        }
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_switch),
+                            contentDescription = "Change UI Style"
+                        )
+                    }
+                },
             )
         },
         content = { paddingValues ->
@@ -70,7 +89,12 @@ internal fun MainScreen(
     LaunchedEffect(Unit) {
         launch {
             viewModel.navigation
-                .collect { onOpenResultScreen(it.batchId) }
+                .collect {
+                    when (it) {
+                        is MainScreenNavigation.GoToResult -> onOpenResultScreen(it.batchId)
+                        is MainScreenNavigation.GoToOnboarding -> onGoToOnboarding()
+                    }
+                }
         }
     }
 }
